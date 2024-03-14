@@ -1,0 +1,11 @@
+package com.investmentapplication.investmentapplication.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+public interface DashboardAPIOperations {
+
+    @GetMapping("/totalBalance")
+    ResponseEntity<Object> getTotalBalance(@RequestParam String userId);
+}
