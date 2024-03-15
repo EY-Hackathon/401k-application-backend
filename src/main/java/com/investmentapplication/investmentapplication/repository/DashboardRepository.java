@@ -11,8 +11,5 @@ import java.util.List;
 public interface DashboardRepository extends JpaRepository<DashboardEntity, Long> {
 
     @Query(nativeQuery = true, value = "SELECT U.TOTALBALANCE FROM USERDETAILS U WHERE USERID: userId")
-    static List<DashboardEntity> findTotalbalance(String userId) {
-        return null;
-    }
-
+    List<DashboardEntity> getUserData(String userId);
 }

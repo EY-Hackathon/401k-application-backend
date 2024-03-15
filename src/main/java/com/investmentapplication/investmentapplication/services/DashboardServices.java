@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface DashboardServices {
 
-    static List<DashboardEntity> getTotalBalance(String userId) {
-        return null;
-    }
+    long getTotalBalance(String userId);
+
+    long getYTDContribution(String userId);
+
+    long getTotalEarnings(String userId);
 }
