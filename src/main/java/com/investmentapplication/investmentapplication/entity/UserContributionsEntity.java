@@ -11,21 +11,20 @@ import java.util.Date;
 @Getter
 @Table(name="usercontributions")
 public class UserContributionsEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String email;
 
-    private long userContribution;
+    private long usercontribution;
 
-    private Date planStartDate;
+    private Date planstartdate;
 
-    private Date actualPlanStartDate;
+    private Date actualplanstartdate;
 
-    private String payFrequency;
+    private String payfrequency;
 
-    private long perPayCheck;
+    private long perpaycheck;
 
 }

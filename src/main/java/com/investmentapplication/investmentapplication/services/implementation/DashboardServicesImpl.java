@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DashboardServicesImpl implements DashboardServices {
@@ -24,25 +25,25 @@ public class DashboardServicesImpl implements DashboardServices {
     @Autowired
     PaycheckCalculator paycheckCalculator;
     @Override
-    public long getTotalBalance(String userId) {
-        long ytdContribution = getYTDContribution(userId);
-        long totalEarnings = getTotalEarnings(userId);
+    public double getTotalBalance(String userId) {
+        double ytdContribution = getYTDContribution(userId);
+        double totalEarnings = getTotalEarnings(userId);
         return ytdContribution + totalEarnings;
     }
 
     @Override
-    public long getYTDContribution(String userId) {
-        //List<UserContributionsEntity> userContributionData = userContributionsRepository.findAll();
-        //System.out.println(userContributionData);
-//        String payFrequency = userContributionData.stream().map(UserContributionsEntity::getPayFrequency).toString();
-//        Optional<Date> planStartDate = userContributionData.stream().map(UserContributionsEntity::getActualPlanStartDate).findFirst();
-//        Date actionPlanStartDate = planStartDate.orElse(null);
-//        return paycheckCalculator.getPayCheckCount(payFrequency, actionPlanStartDate);
-        return 0;
+    public double getYTDContribution(String userId) {
+        List<UserContributionsEntity> userContributionData = userContributionsRepository.findAll();
+        List<Long> contributionPerPayCheck = userContributionData.stream().map(UserContributionsEntity::getPerpaycheck).collect(Collectors.toList());
+        List<String> payFrequency = userContributionData.stream().map(UserContributionsEntity::getPayfrequency).collect(Collectors.toList());
+        Optional<Date> planStartDate = userContributionData.stream().map(UserContributionsEntity::getActualplanstartdate).findFirst();
+        Date actionPlanStartDate = planStartDate.orElse(null);
+        double checkCount = paycheckCalculator.getPayCheckCount(payFrequency.get(0), actionPlanStartDate);
+        return checkCount * contributionPerPayCheck.get(0);
     }
 
     @Override
-    public long getTotalEarnings(String userId) {
+    public double getTotalEarnings(String userId) {
         return 522;
     }
 }

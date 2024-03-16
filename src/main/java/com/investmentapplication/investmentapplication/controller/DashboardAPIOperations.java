@@ -8,4 +8,10 @@ public interface DashboardAPIOperations {
 
     @GetMapping("/totalBalance")
     ResponseEntity<Object> getTotalBalance(@RequestParam String userId);
+
+    @GetMapping("/YTDBalance")
+    ResponseEntity<Object> getYTDBalance(@RequestParam String userId);
+
+    @GetMapping("/totalEarnings")
+    ResponseEntity<Object> getTotalEarnings(@RequestParam String userId);
 }

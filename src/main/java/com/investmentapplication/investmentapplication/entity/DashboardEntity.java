@@ -16,32 +16,32 @@ public class DashboardEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private String firstName;
+    private String firstname;
 
     private String lastname;
 
-    private Date dob;
+    private Date dateofbirth;
 
     private Long ssn;
 
-    private String mailingAddress;
+    private String mailingaddress;
 
     private String email;
 
-    private long phoneNumber;
+    private String phonenumber;
 
-//    private String password;
+    private String password;
 
-    private String securityQuestion1;
+    private String securityquestion1;
 
-    private String getSecurityQuestion1Answer;
+    private String securityquestion1answer;
 
-    private String securityQuestion2;
+    private String securityquestion2;
 
-    private String getSecurityQuestion2Answer;
+    private String securityquestion2answer;
 
-    private String securityQuestion3;
+    private String securityquestion3;
 
-    private String getSecurityQuestion3Answer;
+    private String securityquestion3answer;
 
 }

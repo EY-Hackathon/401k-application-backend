@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface DashboardServices {
 
-    long getTotalBalance(String userId);
+    double getTotalBalance(String userId);
 
-    long getYTDContribution(String userId);
+    double getYTDContribution(String userId);
 
-    long getTotalEarnings(String userId);
+    double getTotalEarnings(String userId);
 }

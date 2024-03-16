@@ -19,7 +19,17 @@ public class DashboardAPIController implements DashboardAPIOperations {
     DashboardServices dashboardServices;
 
     public ResponseEntity<Object> getTotalBalance(String userId){
-        long response = dashboardServices.getTotalBalance(userId);
+        double response = dashboardServices.getTotalBalance(userId);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Object> getYTDBalance(String userId){
+        double ytdBalance = dashboardServices.getYTDContribution(userId);
+        return new ResponseEntity<>(ytdBalance, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Object> getTotalEarnings(String userId){
+        double totalEarnings = dashboardServices.getTotalEarnings(userId);
+        return new ResponseEntity<>(totalEarnings, HttpStatus.OK);
     }
 }
