@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface DashboardAPIOperations {
 
     @GetMapping("/totalBalance")
-    ResponseEntity<Object> getTotalBalance(@RequestParam String userId);
+    ResponseEntity<Object> getTotalBalance(@RequestParam String email);
 
     @GetMapping("/YTDBalance")
-    ResponseEntity<Object> getYTDBalance(@RequestParam String userId);
+    ResponseEntity<Object> getYTDBalance(@RequestParam String email);
 
     @GetMapping("/totalEarnings")
-    ResponseEntity<Object> getTotalEarnings(@RequestParam String userId);
+    ResponseEntity<Object> getTotalEarnings(@RequestParam String email);
 }

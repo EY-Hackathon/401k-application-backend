@@ -1,14 +1,10 @@
 package com.investmentapplication.investmentapplication.services;
 
-import com.investmentapplication.investmentapplication.entity.DashboardEntity;
-
-import java.util.List;
-
 public interface DashboardServices {
 
-    double getTotalBalance(String userId);
+    double getTotalBalance(String email);
 
-    double getYTDContribution(String userId);
+    double getYTDContribution(String email);
 
-    double getTotalEarnings(String userId);
+    double getTotalEarnings(String email);
 }

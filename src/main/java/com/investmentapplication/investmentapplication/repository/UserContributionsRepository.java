@@ -10,6 +10,5 @@ import java.util.List;
 @Repository
 public interface UserContributionsRepository extends JpaRepository<UserContributionsEntity, Long> {
 
-    @Query(nativeQuery = true, value = "SELECT * FROM USERDETAILS WHERE EMAIL: userId")
-    List<UserContributionsEntity> getUserContributionData(String userId);
+    List<UserContributionsEntity> findByEmail(String email);
 }

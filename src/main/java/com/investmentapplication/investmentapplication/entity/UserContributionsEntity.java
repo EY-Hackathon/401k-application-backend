@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -13,18 +14,30 @@ import java.util.Date;
 public class UserContributionsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     private String email;
 
-    private long usercontribution;
+    private long originalContributionPercentage;
 
-    private Date planstartdate;
+    private Date planStartDate;
 
-    private Date actualplanstartdate;
+    private Date actualPlanStartDate;
 
-    private String payfrequency;
+    private String payFrequency;
 
-    private long perpaycheck;
+    private Double perPayCheck;
+
+    private Double currentContributionPercentage;
+
+    private Double recurringPercentage;
+
+    private Double contributionValue;
+
+    private Timestamp updatedAt;
+
+    private Double totalContributionValue;
+
+    private Double totalYtdContributionValue;
 
 }

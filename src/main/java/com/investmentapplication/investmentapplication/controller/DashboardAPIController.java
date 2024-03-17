@@ -1,30 +1,27 @@
 package com.investmentapplication.investmentapplication.controller;
 
-import com.investmentapplication.investmentapplication.entity.DashboardEntity;
-import com.investmentapplication.investmentapplication.repository.DashboardRepository;
+import com.investmentapplication.investmentapplication.repository.UserAccountsRepository;
 import com.investmentapplication.investmentapplication.services.DashboardServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 public class DashboardAPIController implements DashboardAPIOperations {
     @Autowired
-    DashboardRepository dashboardRepository;
+    UserAccountsRepository dashboardRepository;
 
     @Autowired
     DashboardServices dashboardServices;
 
-    public ResponseEntity<Object> getTotalBalance(String userId){
-        double response = dashboardServices.getTotalBalance(userId);
+    public ResponseEntity<Object> getTotalBalance(String email){
+        double response = dashboardServices.getTotalBalance(email);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    public ResponseEntity<Object> getYTDBalance(String userId){
-        double ytdBalance = dashboardServices.getYTDContribution(userId);
+    public ResponseEntity<Object> getYTDBalance(String email){
+        double ytdBalance = dashboardServices.getYTDContribution(email);
         return new ResponseEntity<>(ytdBalance, HttpStatus.OK);
     }
 

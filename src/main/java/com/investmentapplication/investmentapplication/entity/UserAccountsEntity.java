@@ -10,7 +10,7 @@ import java.util.Date;
 @Setter
 @Getter
 @Table(name="useraccounts")
-public class DashboardEntity {
+public class UserAccountsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
