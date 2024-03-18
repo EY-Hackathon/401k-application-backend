@@ -7,27 +7,26 @@ import java.util.Date;
 
 @Service
 public class PaycheckCalculator {
-    public int getPayCheckCount(String payFrequency, Date planStartDate) {
+    public int getPayCheckCount(String payFrequency, Date startDate, Date endDate) {
         int payCheckCount = 0;
-        Date currentDate = new Date();
 
         switch (payFrequency.toLowerCase()) {
             case "monthly":
-                payCheckCount = getMonthDifference(planStartDate, currentDate);
+                payCheckCount = getMonthDifference(startDate, endDate);
                 break;
             case "biweekly":
-                Date nextBiWeeklyPayday = getNextBiWeeklyPayday(planStartDate);
-                while (nextBiWeeklyPayday.before(currentDate) || nextBiWeeklyPayday.equals(currentDate)) {
+                Date nextBiWeeklyPayday = getNextBiWeeklyPayday(startDate);
+                while (nextBiWeeklyPayday.before(endDate) || nextBiWeeklyPayday.equals(endDate)) {
                     payCheckCount++;
                     nextBiWeeklyPayday = addDays(nextBiWeeklyPayday, 14); // Add 14 days for bi-weekly
                 }
                 break;
             case "weekly":
-                payCheckCount = getWeekDifference(planStartDate, currentDate);
+                payCheckCount = getWeekDifference(startDate, endDate);
                 break;
             case "semimonthly":
-                Date nextFirstPayday = getNextFirstPayday(planStartDate);
-                while (nextFirstPayday.before(currentDate) || nextFirstPayday.equals(currentDate)) {
+                Date nextFirstPayday = getNextFirstPayday(startDate);
+                while (nextFirstPayday.before(endDate) || nextFirstPayday.equals(endDate)) {
                     payCheckCount++;
                     nextFirstPayday = addDays(nextFirstPayday, 15); // Add 15 days for semi-monthly
                 }

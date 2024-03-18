@@ -9,6 +9,9 @@ public interface DashboardAPIOperations {
     @GetMapping("/totalBalance")
     ResponseEntity<Object> getTotalBalance(@RequestParam String email);
 
+    @GetMapping("/totalContribution")
+    ResponseEntity<Object> getTotalContribution(@RequestParam String email);
+
     @GetMapping("/YTDBalance")
     ResponseEntity<Object> getYTDBalance(@RequestParam String email);
 

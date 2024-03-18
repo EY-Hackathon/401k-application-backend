@@ -20,13 +20,18 @@ public class DashboardAPIController implements DashboardAPIOperations {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    public ResponseEntity<Object> getTotalContribution(String email){
+        double totalContribution = dashboardServices.getTotalContribution(email);
+        return new ResponseEntity<>(totalContribution, HttpStatus.OK);
+    }
+
     public ResponseEntity<Object> getYTDBalance(String email){
         double ytdBalance = dashboardServices.getYTDContribution(email);
         return new ResponseEntity<>(ytdBalance, HttpStatus.OK);
     }
 
-    public ResponseEntity<Object> getTotalEarnings(String userId){
-        double totalEarnings = dashboardServices.getTotalEarnings(userId);
+    public ResponseEntity<Object> getTotalEarnings(String email){
+        double totalEarnings = dashboardServices.getTotalEarnings(email);
         return new ResponseEntity<>(totalEarnings, HttpStatus.OK);
     }
 }
