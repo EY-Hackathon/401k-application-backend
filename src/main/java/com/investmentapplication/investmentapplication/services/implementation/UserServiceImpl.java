@@ -19,9 +19,8 @@ public class UserServiceImpl implements UserService {
         boolean passwordMatch = false;
         TokenResponse response = new TokenResponse();
         UserEntity storedUser = userRepository.findByUsername(request.getUsername());
-            passwordMatch = request.getPassword().equals("password");
+            passwordMatch = request.getPassword().equals(storedUser.getPassword());
         if (passwordMatch) {
-            String token = jwtUtil.generateToken(storedUser);
             response.setToken(jwtUtil.generateToken(storedUser));
         }
         return response;

@@ -1,10 +1,10 @@
 package com.investmentapplication.investmentapplication.services;
 
 
-import com.investmentapplication.investmentapplication.entity.UserProfile;
+import com.investmentapplication.investmentapplication.dto.UserProfileDto;
 
 public interface UserProfileService {
-    UserProfile getUserProfileDetails(String username);
-    void updateUserProfile(String username, UserProfile userProfile);
+    UserProfileDto getUserProfileDetails(String email) throws Exception;
+    void updateUserProfile(String username, UserProfileDto userProfile) throws Exception;
 }
 

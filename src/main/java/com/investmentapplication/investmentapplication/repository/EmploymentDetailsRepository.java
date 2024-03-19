@@ -7,7 +7,7 @@ import java.util.List;
 
 @Repository
 public interface EmploymentDetailsRepository extends JpaRepository<EmploymentDetails, Long> {
-        EmploymentDetails findByUsername(String username);
+        EmploymentDetails findByEmail(String email);
 
     }
 

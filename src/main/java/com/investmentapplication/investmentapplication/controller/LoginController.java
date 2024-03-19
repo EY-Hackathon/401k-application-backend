@@ -6,25 +6,18 @@ import com.investmentapplication.investmentapplication.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
-public class LoginController {
+
+public class LoginController implements LoginOperations{
     @Autowired
     UserService userService;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserEntity request) {
+
+    public ResponseEntity<Object> login(UserEntity request) throws UsernameNotFoundException {
         TokenResponse response= userService.loginService(request);
-        if (response != null) {
-            return ResponseEntity.ok(response);
-        } else {
-            System.out.println(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed").toString());
-            return new ResponseEntity<>("Login failed", HttpStatus.UNAUTHORIZED);
-        }
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 }
