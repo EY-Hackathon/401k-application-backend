@@ -1,12 +1,12 @@
 package com.investmentapplication.investmentapplication.services;
 
-import com.investmentapplication.investmentapplication.entity.DashboardEntity;
-
-import java.util.List;
-
 public interface DashboardServices {
 
-    static List<DashboardEntity> getTotalBalance(String userId) {
-        return null;
-    }
+    double getTotalBalance(String email);
+
+    double getTotalContribution(String email);
+
+    double getYTDContribution(String email);
+
+    double getTotalEarnings(String email);
 }
