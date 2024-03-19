@@ -5,8 +5,5 @@ import com.investmentapplication.investmentapplication.entity.InvestmentPlansEnt
 import java.util.List;
 
 public interface InvestmentPlanServices {
-
      List<InvestmentPlansEntity> getAllPlans();
-
-
 }
