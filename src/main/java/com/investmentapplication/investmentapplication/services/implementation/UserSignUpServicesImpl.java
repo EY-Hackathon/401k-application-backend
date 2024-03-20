@@ -38,6 +38,8 @@ public class UserSignUpServicesImpl implements UserSignUpServices {
     }
 
         public boolean isEmailexists(String email) throws Exception {
+
+
             if(userAccountsRepository.findByEmail(email) == null){
                 throw new Exception("User already exists");
             }
