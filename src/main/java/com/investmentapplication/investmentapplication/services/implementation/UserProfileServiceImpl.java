@@ -1,7 +1,7 @@
 package com.investmentapplication.investmentapplication.services.implementation;
 
 import com.investmentapplication.investmentapplication.dto.UserProfileDto;
-import com.investmentapplication.investmentapplication.entity.EmploymentDetails;
+import com.investmentapplication.investmentapplication.entity.EmploymentDetailsEntity;
 import com.investmentapplication.investmentapplication.entity.UserEntity;
 import com.investmentapplication.investmentapplication.repository.EmploymentDetailsRepository;
 import com.investmentapplication.investmentapplication.repository.UserRepository;
@@ -21,14 +21,14 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     public UserProfileDto getUserProfileDetails(String email) throws Exception {
         UserEntity userEntity = userRepository.findByEmail(email);
-        EmploymentDetails employmentDetails = employmentDetailsRepository.findByEmail(email);
+        EmploymentDetailsEntity employmentDetails = employmentDetailsRepository.findByEmail(email);
         UserProfileDto userProfile = new UserProfileDto();
         if (userEntity != null) {
             userProfile.setUsername(userEntity.getUsername());
             userProfile.setFirstname(userEntity.getFirstname());
             userProfile.setLastname(userEntity.getLastname());
             userProfile.setMailingaddress(userEntity.getMailingaddress());
-            userProfile.setPhoneNumber(userEntity.getPhoneNo());
+            userProfile.setPhoneNumber(userEntity.getPhonenumbeer());
             userProfile.setDateofbirth(userEntity.getDateofbirth());
             userProfile.setSsn(userEntity.getSsn());
         } else {
@@ -54,11 +54,11 @@ public class UserProfileServiceImpl implements UserProfileService {
             userEntity.setFirstname(userProfile.getFirstname());
             userEntity.setLastname(userProfile.getLastname());
             userEntity.setMailingaddress(userProfile.getMailingaddress());
-            userEntity.setPhoneNo(userProfile.getPhoneNumber());
+            userEntity.setPhonenumbeer(userProfile.getPhoneNumber());
             userEntity.setDateofbirth(userProfile.getDateofbirth());
             userEntity.setSsn(userProfile.getSsn());
             userRepository.save(userEntity);
-            EmploymentDetails employmentDetails = employmentDetailsRepository.findByEmail(email);
+            EmploymentDetailsEntity employmentDetails = employmentDetailsRepository.findByEmail(email);
         if (employmentDetails != null) {
             employmentDetails.setEmployerName(userProfile.getEmployername());
             employmentDetails.setEmploymentStartDate(userProfile.getEmployment_start_date());

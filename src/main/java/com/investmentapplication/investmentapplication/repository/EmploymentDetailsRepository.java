@@ -1,13 +1,11 @@
 package com.investmentapplication.investmentapplication.repository;
-import com.investmentapplication.investmentapplication.entity.EmploymentDetails;
+import com.investmentapplication.investmentapplication.entity.EmploymentDetailsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface EmploymentDetailsRepository extends JpaRepository<EmploymentDetails, Long> {
-        EmploymentDetails findByEmail(String email);
+public interface EmploymentDetailsRepository extends JpaRepository<EmploymentDetailsEntity, Long> {
+        EmploymentDetailsEntity findByEmail(String email);
 
     }
 

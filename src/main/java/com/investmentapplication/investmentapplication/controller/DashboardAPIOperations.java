@@ -19,4 +19,10 @@ public interface DashboardAPIOperations {
 
     @GetMapping("/totalEarnings")
     ResponseEntity<Object> getTotalEarnings(@RequestParam String email);
+
+    @GetMapping("/employerMatchValue")
+    ResponseEntity<Object> getEmployerMatchValue(@RequestParam String email);
+
+    @GetMapping("/employerMatchDetails")
+    ResponseEntity<Object> getEmployerMatchDetails(@RequestParam String email);
 }

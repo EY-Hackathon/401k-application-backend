@@ -12,10 +12,8 @@ import java.util.Date;
 @Getter
 @Table(name="usercontributions")
 public class UserContributionsEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
+    @Id
     private String email;
 
     private long originalContributionPercentage;

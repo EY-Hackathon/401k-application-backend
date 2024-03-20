@@ -24,20 +24,8 @@ public class UserEntity implements UserDetails {
     private String lastname;
     private String mailingaddress;
     private String ssn;
-    private String phoneNo;
+    private String phonenumbeer;
     private Date dateofbirth;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
 
     @Override
     public boolean isAccountNonExpired() {
