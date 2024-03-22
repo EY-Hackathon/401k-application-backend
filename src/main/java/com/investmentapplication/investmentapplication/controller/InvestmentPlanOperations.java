@@ -9,11 +9,11 @@ import java.util.List;
 
 @RequestMapping("/api")
 
- public interface InvestmentPlanOperations {
+public interface InvestmentPlanOperations {
 
     @PostMapping("/investmentPlans")
     public ResponseEntity<String> insertInvestmentPlans(@RequestBody List<InvestmentPlanDTO> investmentPlanDTO);
 
-     @GetMapping("/investmentPlans")
-     ResponseEntity<Object> getAllPlans();
+    @GetMapping("/investmentPlans")
+    ResponseEntity<Object> getAllPlans();
 }

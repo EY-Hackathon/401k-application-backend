@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class InvestmentPlanImpl implements InvestmentPlanServices {
 
-@Autowired
+    @Autowired
     private InvestmentPlanRepository investmentPlanRepository;
 
     @Override
@@ -34,15 +34,14 @@ public class InvestmentPlanImpl implements InvestmentPlanServices {
         });
 
 
-    return "Plans inserted";
+        return "Plans inserted";
     }
 
 
-    public List<InvestmentPlansEntity> getAllPlans(){
+    public List<InvestmentPlansEntity> getAllPlans() {
 
-    return investmentPlanRepository.findAll();
-}
-
+        return investmentPlanRepository.findAll();
+    }
 
 
 }

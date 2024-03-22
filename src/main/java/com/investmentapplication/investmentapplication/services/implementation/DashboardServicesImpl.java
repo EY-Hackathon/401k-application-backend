@@ -38,15 +38,15 @@ public class DashboardServicesImpl implements DashboardServices {
     }
 
     @Override
-    public double getTotalContribution(String email){
+    public double getTotalContribution(String email) {
         double[] totalContributionValue = new double[1];
         List<UserContributionsEntity> userContribution = userContributionsRepository.findByEmail(email);
         UserEmploymentEntity userEmploymentDetails = userEmploymentRepository.findByEmail(email);
         Double salary = userEmploymentDetails.getAnnualSalary();
 
         userContribution.forEach(contribution -> {
-            if(email.equals(contribution.getEmail())){
-                Map<String, Object> tempTotalContributionValue  = userContributionClass.calculateTotalContributionValue(
+            if (email.equals(contribution.getEmail())) {
+                Map<String, Object> tempTotalContributionValue = userContributionClass.calculateTotalContributionValue(
                         contribution.getRecurringPercentage(),
                         salary,
                         contribution.getCurrentContributionPercentage(),

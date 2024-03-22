@@ -64,16 +64,16 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public void updateUserProfile(String email, UserProfileDto userProfile) {
         List<UserAccountsEntity> userEntity = userRepository.findByEmail(email);
-        userEntity.forEach(users ->{
+        userEntity.forEach(users -> {
             users.setFirstName(userProfile.getFirstName() != null ? userProfile.getFirstName() : null);
-            users.setLastName(userProfile.getLastName() != null ? userProfile.getLastName(): null );
+            users.setLastName(userProfile.getLastName() != null ? userProfile.getLastName() : null);
             users.setMailingAddress(userProfile.getMailingAddress() != null ? userProfile.getMailingAddress() : null);
             users.setPhoneNumber(userProfile.getPhoneNumber() != null ? userProfile.getPhoneNumber() : null);
             users.setDateOfBirth(userProfile.getDateOfBirth() != null ? userProfile.getDateOfBirth() : null);
-            users.setSsn(String.valueOf(userProfile.getSsn()).length() == 9 ? userProfile.getSsn() : null );
+            users.setSsn(String.valueOf(userProfile.getSsn()).length() == 9 ? userProfile.getSsn() : null);
             userRepository.save(users);
         });
-         //save values in user repository
+        //save values in user repository
 
         EmploymentDetailsEntity employmentDetails = employmentDetailsRepository.findByEmail(email);
         employmentDetails.setEmployerName(userProfile.getEmployerName() != null ? userProfile.getEmployerName() : null);
@@ -81,6 +81,6 @@ public class UserProfileServiceImpl implements UserProfileService {
         employmentDetails.setAnnualSalary(userProfile.getAnnualSalary() != null ? userProfile.getAnnualSalary() : 0);
         employmentDetails.setPayFrequency(userProfile.getPayFrequency() != null ? userProfile.getPayFrequency() : null);
         employmentDetailsRepository.save(employmentDetails); //save values in employmentDetails repository
-        }
     }
+}
 

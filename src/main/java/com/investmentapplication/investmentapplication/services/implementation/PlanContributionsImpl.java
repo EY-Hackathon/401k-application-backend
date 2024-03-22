@@ -1,4 +1,5 @@
 package com.investmentapplication.investmentapplication.services.implementation;
+
 import com.investmentapplication.investmentapplication.entity.PlanContributionsEntity;
 import com.investmentapplication.investmentapplication.entity.UserAccountsEntity;
 import com.investmentapplication.investmentapplication.exception.PlanContributionException;
@@ -33,17 +34,17 @@ public class PlanContributionsImpl implements PlanContributionsServices {
 
     @Override
     public String updatePlanContribution(String email, PlanContributionsEntity planContribution) {
-        PlanContributionsEntity existingRecord =  planContributionsRepository.findByEmail(email);
+        PlanContributionsEntity existingRecord = planContributionsRepository.findByEmail(email);
 
         List<UserAccountsEntity> userAccountDetails = userAccountsRepository.findByEmail(email);
         List<String> userAccountsEmailList = userAccountDetails.stream().map(UserAccountsEntity::getEmail).toList();
         String accountEmail = userAccountsEmailList.get(0) != null ? userAccountsEmailList.get(0) : EMPTY;
 
-        if(accountEmail.isEmpty() && existingRecord == null) {
+        if (accountEmail.isEmpty() && existingRecord == null) {
             throw new PlanContributionException(ErrorCode.PLAN_CONTRIBUTION_NOT_FOUND, "Plan contribution could not be updated for email: " + email);
         }
 
-        if(existingRecord != null){
+        if (existingRecord != null) {
             existingRecord.setGovernmentalPlans(planContribution.getGovernmentalPlans());
             existingRecord.setDefinedBenefitPlan((planContribution.getDefinedBenefitPlan()));
             existingRecord.setCreatedAt(new Timestamp(System.currentTimeMillis()));
@@ -62,8 +63,7 @@ public class PlanContributionsImpl implements PlanContributionsServices {
             existingRecord.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 
             planContributionsRepository.save(existingRecord);
-        }
-        else if(accountEmail.equals(email)) {
+        } else if (accountEmail.equals(email)) {
             PlanContributionsEntity newRecord = new PlanContributionsEntity();
             newRecord.setGovernmentalPlans(planContribution.getGovernmentalPlans());
             newRecord.setDefinedBenefitPlan((planContribution.getDefinedBenefitPlan()));

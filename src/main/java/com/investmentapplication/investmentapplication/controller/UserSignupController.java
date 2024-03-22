@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 @Validated
 @CrossOrigin
 @RequestMapping("/api")
-public class UserSignupController{
+public class UserSignupController {
 
     @Autowired
     private UserSignUpServices userSignUpServices;
@@ -37,7 +38,7 @@ public class UserSignupController{
             }
         }
         // Check if the email already exists
-        if (userSignUpServices.isEmailExists(userSignUpDTO.getEmail() )) {
+        if (userSignUpServices.isEmailExists(userSignUpDTO.getEmail())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already exists");
         }
         // Add the user if email doesn't exist and validation passes
