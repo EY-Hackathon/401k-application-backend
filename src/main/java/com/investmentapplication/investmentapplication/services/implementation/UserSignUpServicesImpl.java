@@ -3,6 +3,7 @@ package com.investmentapplication.investmentapplication.services.implementation;
 import com.investmentapplication.investmentapplication.dto.UserSignUpDTO;
 import com.investmentapplication.investmentapplication.entity.UserAccountsEntity;
 import com.investmentapplication.investmentapplication.entity.UserEmploymentEntity;
+import com.investmentapplication.investmentapplication.exception.UserAlreadyExistsException;
 import com.investmentapplication.investmentapplication.repository.UserAccountsRepository;
 import com.investmentapplication.investmentapplication.repository.UserEmploymentRepository;
 import com.investmentapplication.investmentapplication.services.UserSignUpServices;
@@ -20,7 +21,11 @@ public class UserSignUpServicesImpl implements UserSignUpServices {
 
 
     @Override
-    public void addUser(UserSignUpDTO userSignUpDTO) {
+    public void addUser(UserSignUpDTO userSignUpDTO) throws Exception {
+        // Check if email already exists
+        if (isEmailExists(userSignUpDTO.getEmail())) {
+            throw new UserAlreadyExistsException("User with this email already exists");
+        }
 
         UserAccountsEntity userAccountsEntity = new UserAccountsEntity();
         userAccountsEntity.setFirstName(userSignUpDTO.getFirstName());
