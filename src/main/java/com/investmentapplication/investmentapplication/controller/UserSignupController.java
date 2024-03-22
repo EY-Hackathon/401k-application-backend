@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Validated
 @CrossOrigin
 @RequestMapping("/api")
-public class UserSignupController {
+public class UserSignupController{
 
     @Autowired
     private UserSignUpServices userSignUpServices;

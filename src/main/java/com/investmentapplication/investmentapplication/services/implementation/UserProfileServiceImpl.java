@@ -42,7 +42,7 @@ public class UserProfileServiceImpl implements UserProfileService {
             userProfile.setLastName(users.getLastName());
             userProfile.setMailingAddress(users.getMailingAddress());
             userProfile.setPhoneNumber(users.getPhoneNumber());
-            userProfile.setDateOfBirth(users.getDateofBirth());
+            userProfile.setDateOfBirth(users.getDateOfBirth());
             userProfile.setSsn(users.getSsn());
         });
 
@@ -69,7 +69,7 @@ public class UserProfileServiceImpl implements UserProfileService {
             users.setLastName(userProfile.getLastName() != null ? userProfile.getLastName(): null );
             users.setMailingAddress(userProfile.getMailingAddress() != null ? userProfile.getMailingAddress() : null);
             users.setPhoneNumber(userProfile.getPhoneNumber() != null ? userProfile.getPhoneNumber() : null);
-            users.setDateofBirth(userProfile.getDateOfBirth() != null ? userProfile.getDateOfBirth() : null);
+            users.setDateOfBirth(userProfile.getDateOfBirth() != null ? userProfile.getDateOfBirth() : null);
             users.setSsn(String.valueOf(userProfile.getSsn()).length() == 9 ? userProfile.getSsn() : null );
             userRepository.save(users);
         });

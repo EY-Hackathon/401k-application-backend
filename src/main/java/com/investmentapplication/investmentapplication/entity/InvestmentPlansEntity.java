@@ -1,5 +1,6 @@
 package com.investmentapplication.investmentapplication.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,9 +15,11 @@ import java.sql.Timestamp;
 public class InvestmentPlansEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
     private String planName;
     private String plansDesc;
     private Timestamp updatedAt;
-
     private Timestamp createdAt;
+
 }

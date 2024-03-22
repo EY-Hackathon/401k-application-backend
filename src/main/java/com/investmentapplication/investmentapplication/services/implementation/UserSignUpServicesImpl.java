@@ -25,7 +25,7 @@ public class UserSignUpServicesImpl implements UserSignUpServices {
         UserAccountsEntity userAccountsEntity = new UserAccountsEntity();
         userAccountsEntity.setFirstName(userSignUpDTO.getFirstName());
         userAccountsEntity.setLastName(userSignUpDTO.getLastName());
-        userAccountsEntity.setDateofBirth(userSignUpDTO.getDateOfBirth());
+        userAccountsEntity.setDateOfBirth(userSignUpDTO.getDateOfBirth());
         userAccountsEntity.setSsn(userSignUpDTO.getSsn());
         userAccountsEntity.setMailingAddress(userSignUpDTO.getMailingAddress());
         userAccountsEntity.setEmail(userSignUpDTO.getEmail());

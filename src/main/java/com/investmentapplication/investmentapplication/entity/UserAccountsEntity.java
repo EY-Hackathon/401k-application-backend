@@ -26,7 +26,7 @@ public class UserAccountsEntity implements UserDetails {
 
     private String lastName;
 
-    private Date dateofBirth;
+    private Date dateOfBirth;
 
     private Long ssn;
 

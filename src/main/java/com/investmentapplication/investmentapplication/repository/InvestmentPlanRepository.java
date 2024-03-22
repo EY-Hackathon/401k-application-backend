@@ -9,7 +9,4 @@ import java.util.List;
 @Repository
 public interface InvestmentPlanRepository extends JpaRepository <InvestmentPlansEntity, String> {
 
-
-
-
 }
