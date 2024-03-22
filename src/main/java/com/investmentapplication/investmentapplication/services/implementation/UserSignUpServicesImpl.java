@@ -31,6 +31,8 @@ public class UserSignUpServicesImpl implements UserSignUpServices {
         userAccountsEntity.setEmail(userSignUpDTO.getEmail());
         userAccountsEntity.setPhoneNumber(userSignUpDTO.getPhoneNumber());
         userAccountsEntity.setPassword(userSignUpDTO.getPassword());
+
+
         userAccountsRepository.save(userAccountsEntity);
 
         UserEmploymentEntity userEmploymentEntity = new UserEmploymentEntity();
@@ -39,6 +41,7 @@ public class UserSignUpServicesImpl implements UserSignUpServices {
         userEmploymentEntity.setEmploymentStartDate(userSignUpDTO.getEmploymentStartDate());
         userEmploymentEntity.setAnnualSalary(userSignUpDTO.getAnnualSalary());
         userEmploymentEntity.setPayFrequency(userSignUpDTO.getPayFrequency());
+
         userEmploymentRepository.save(userEmploymentEntity);
     }
 
