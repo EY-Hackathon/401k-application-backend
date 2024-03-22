@@ -14,35 +14,30 @@ public class UserSignUpServicesImpl implements UserSignUpServices {
     private UserAccountsRepository userAccountsRepository;
 
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
-
     @Override
-    public UserAccountsEntity addUser(UserSignUpDTO userSignUpDTO){
-//        List<UserAccountsEntity> userAccountsEntityList = userAccountsRepository.findAll();
-////            userAccountsEntityList.stream()
+    public UserAccountsEntity addUser(UserSignUpDTO userSignUpDTO) {
+
 
         UserAccountsEntity userAccountsEntity = new UserAccountsEntity();
-             userAccountsEntity.setFirstname(userSignUpDTO.getFirstname());
-             userAccountsEntity.setLastname(userSignUpDTO.getLastname());
-             userAccountsEntity.setDateofbirth(userSignUpDTO.getDateofbirth());
-             userAccountsEntity.setSsn(userSignUpDTO.getSsn());
-             userAccountsEntity.setMailingaddress(userSignUpDTO.getMailingaddress());
-             userAccountsEntity.setEmail(userSignUpDTO.getEmail());
-             userAccountsEntity.setPhonenumber(userSignUpDTO.getPhonenumber());
-             userAccountsEntity.setPassword(userSignUpDTO.getPassword());
+        userAccountsEntity.setFirstname(userSignUpDTO.getFirstname());
+        userAccountsEntity.setLastname(userSignUpDTO.getLastname());
+        userAccountsEntity.setDateofbirth(userSignUpDTO.getDateofbirth());
+        userAccountsEntity.setSsn(userSignUpDTO.getSsn());
+        userAccountsEntity.setMailingaddress(userSignUpDTO.getMailingaddress());
+        userAccountsEntity.setEmail(userSignUpDTO.getEmail());
+        userAccountsEntity.setPhonenumber(userSignUpDTO.getPhonenumber());
+        userAccountsEntity.setPassword(userSignUpDTO.getPassword());
 
 
-
-             return userAccountsRepository.save(userAccountsEntity);
+        return userAccountsRepository.save(userAccountsEntity);
     }
 
-        public boolean isEmailexists(String email) throws Exception {
+    public boolean isEmailexists(String email) throws Exception {
 
 
-            if(userAccountsRepository.findByEmail(email) == null){
-                throw new Exception("User already exists");
-            }
-            return  false;
+        if (userAccountsRepository.findByEmail(email) != null) {
+            throw new Exception("User already exists");
         }
+        return true;
+    }
 }

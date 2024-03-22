@@ -42,7 +42,7 @@ public class UserSignupController {
         if (userSignUpServices.isEmailexists(userSignUpDTO.getEmail() )) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already exists");
         }
-            userSignUpServices.addUser(userSignUpDTO);
+        userSignUpServices.addUser(userSignUpDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
     }
 
