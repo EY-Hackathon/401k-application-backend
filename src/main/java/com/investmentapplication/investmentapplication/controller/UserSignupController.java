@@ -1,6 +1,5 @@
 package com.investmentapplication.investmentapplication.controller;
 
-
 import com.investmentapplication.investmentapplication.dto.UserSignUpDTO;
 import com.investmentapplication.investmentapplication.services.UserSignUpServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,26 +10,25 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+/**
+ * Controller class for handling user sign-up related API endpoints.
+ */
 @RestController
 @Validated
 @CrossOrigin
 @RequestMapping("/api")
-public class UserSignupController{
+public class UserSignupController {
 
     @Autowired
     private UserSignUpServices userSignUpServices;
 
-    @PostMapping(path = "/signup")
-
     public ResponseEntity<String> signup(@RequestBody @Validated UserSignUpDTO userSignUpDTO, BindingResult bindingResult) throws Exception {
 
         if (bindingResult.hasErrors()) {
-            // Check for missing fields and extract error messages
+            // Check for validation errors and return appropriate response
             List<String> errorMessages = bindingResult.getFieldErrors().stream()
                     .map(FieldError::getDefaultMessage) // Get the error message defined in the annotation
                     .collect(Collectors.toList());
@@ -39,9 +37,11 @@ public class UserSignupController{
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(String.join(", ", errorMessages));
             }
         }
-        if (userSignUpServices.isEmailExists(userSignUpDTO.getEmail() )) {
+        // Check if the email already exists
+        if (userSignUpServices.isEmailExists(userSignUpDTO.getEmail())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already exists");
         }
+        // Add the user if email doesn't exist and validation passes
         userSignUpServices.addUser(userSignUpDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
     }

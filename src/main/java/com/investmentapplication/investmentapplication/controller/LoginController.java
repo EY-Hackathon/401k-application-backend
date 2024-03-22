@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 
-public class LoginController implements LoginOperations{
+public class LoginController implements LoginOperations {
     @Autowired
     UserService userService;
 
 
     public ResponseEntity<Object> login(UserAccountsEntity request) throws UsernameNotFoundException {
-        TokenResponse response= userService.loginService(request);
+        TokenResponse response = userService.loginService(request);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 }

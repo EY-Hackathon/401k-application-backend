@@ -20,31 +20,31 @@ public class DashboardAPIController implements DashboardAPIOperations {
     EmployerMatchServices employerMatchServices;
 
     @Override
-    public ResponseEntity<Object> getTotalBalance(String email){
+    public ResponseEntity<Object> getTotalBalance(String email) {
         double response = dashboardServices.getTotalBalance(email);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Object> getTotalContribution(String email){
+    public ResponseEntity<Object> getTotalContribution(String email) {
         double totalContribution = dashboardServices.getTotalContribution(email);
         return new ResponseEntity<>(totalContribution, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Object> getYTDBalance(String email){
+    public ResponseEntity<Object> getYTDBalance(String email) {
         double ytdBalance = dashboardServices.getYTDContribution(email);
         return new ResponseEntity<>(ytdBalance, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Object> getTotalEarnings(String email){
+    public ResponseEntity<Object> getTotalEarnings(String email) {
         double totalEarnings = dashboardServices.getTotalEarnings(email);
         return new ResponseEntity<>(totalEarnings, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Object> getEmployerMatchValue(String email){
+    public ResponseEntity<Object> getEmployerMatchValue(String email) {
         double employerMatchValue = employerMatchServices.GetEmployerMatchValue(email);
         return new ResponseEntity<>(employerMatchValue, HttpStatus.OK);
     }

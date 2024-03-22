@@ -59,23 +59,7 @@ public class PlanContributionsImpl implements PlanContributionsServices {
             throw new PlanContributionException(ErrorCode.PLAN_CONTRIBUTION_NOT_FOUND, "Plan contribution could not be updated for email: " + email);
         }
 
-        existingRecord.setGovernmentalPlans(planContribution.getGovernmentalPlans());
-        existingRecord.setDefinedBenefitPlan(planContribution.getDefinedBenefitPlan());
-        existingRecord.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-        existingRecord.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-        existingRecord.setPlans457(planContribution.getPlans457());
-        existingRecord.setMoneyPurchasePlans(planContribution.getMoneyPurchasePlans());
-        existingRecord.setProfitSharingPlans(planContribution.getProfitSharingPlans());
-        existingRecord.setMultipleEmployerPlans(planContribution.getMultipleEmployerPlans());
-        existingRecord.setPlans403b(planContribution.getPlans403b());
-        existingRecord.setESOPs(planContribution.getESOPs());
-        existingRecord.setPayrollDeductionIRAs(planContribution.getPayrollDeductionIRAs());
-        existingRecord.setRothIRA(planContribution.getRothIRA());
-        existingRecord.setSARSEP(planContribution.getSARSEP());
-        existingRecord.setSEP(planContribution.getSEP());
-        existingRecord.setEmail(planContribution.getEmail());
-        existingRecord.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-        if(existingRecord != null){
+        if (existingRecord != null) {
             existingRecord.setGovernmentalPlans(planContribution.getGovernmentalPlans());
             existingRecord.setDefinedBenefitPlan((planContribution.getDefinedBenefitPlan()));
             existingRecord.setCreatedAt(new Timestamp(System.currentTimeMillis()));

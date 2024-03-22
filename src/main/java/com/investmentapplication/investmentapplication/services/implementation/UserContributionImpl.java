@@ -68,14 +68,14 @@ public class UserContributionImpl implements UserContributionServices {
     public String updateUserContribution(String email, List<UserContributionUpdateDTO> userContributions) {
         List<UserContributionsEntity> existingUserDetails = userContributionsRepository.findByEmail(email);
         String userEmail = EMPTY;
-        if(!existingUserDetails.isEmpty()){
+        if (!existingUserDetails.isEmpty()) {
             List<String> userEmailList = existingUserDetails.stream().map(UserContributionsEntity::getEmail).toList();
             userEmail = userEmailList.get(0) != null ? userEmailList.get(0) : EMPTY;
         }
         UserEmploymentEntity userEmploymentDetails = userEmploymentRepository.findByEmail(email);
         Double salary = userEmploymentDetails.getAnnualSalary();
 
-        if(!userEmail.isEmpty() && userEmail.equals(email)){
+        if (!userEmail.isEmpty() && userEmail.equals(email)) {
             existingUserDetails.forEach(contribution -> {
                 userContributions.stream()
                         .filter(update -> contribution.getEmail().equals(update.getEmail()))
@@ -103,7 +103,7 @@ public class UserContributionImpl implements UserContributionServices {
                                 double newContributionValue = salary * (update.getUserCurrentContributionPercentage() / 100.0);
                                 contribution.setContributionValue(newContributionValue);
                                 int count = PayFrequencyYearlyCount.getCountForPayFrequency(contribution.getPayFrequency());
-                                Double perPayCheck = newContributionValue/count;
+                                Double perPayCheck = newContributionValue / count;
                                 contribution.setPerPayCheck(perPayCheck);
                             }
                             if (update.getRecurringPercentage() != null) {
@@ -112,8 +112,7 @@ public class UserContributionImpl implements UserContributionServices {
                         });
                 userContributionsRepository.saveAll(existingUserDetails);
             });
-        }
-        else{
+        } else {
             //create a new record for new user
             UserContributionsEntity userContributionsEntity = new UserContributionsEntity();
             List<UserAccountsEntity> userAccountDetails = userAccountsRepository.findByEmail(email);
@@ -128,7 +127,7 @@ public class UserContributionImpl implements UserContributionServices {
 
             Date actualPlanStartDate = calendar.getTime();
 
-            if(!accountEmail.isEmpty() && accountEmail.equals(email)){
+            if (!accountEmail.isEmpty() && accountEmail.equals(email)) {
                 userContributions.forEach(updatedUserContribution -> {
                     userContributionsEntity.setEmail(updatedUserContribution.getEmail());
                     userContributionsEntity.setOriginalContributionPercentage(updatedUserContribution.getUserCurrentContributionPercentage());
@@ -138,7 +137,7 @@ public class UserContributionImpl implements UserContributionServices {
                     userContributionsEntity.setPayFrequency(userEmploymentDetails.getPayFrequency());
                     userContributionsEntity.setCurrentContributionPercentage(updatedUserContribution.getUserCurrentContributionPercentage());
                     userContributionsEntity.setRecurringPercentage(updatedUserContribution.getRecurringPercentage());
-                    userContributionsEntity.setContributionValue((salary*updatedUserContribution.getUserCurrentContributionPercentage())/100);
+                    userContributionsEntity.setContributionValue((salary * updatedUserContribution.getUserCurrentContributionPercentage()) / 100);
                     userContributionsEntity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
                     userContributionsEntity.setTotalContributionValue((double) 0);
                     userContributionsEntity.setTotalYtdContributionValue((double) 0);
@@ -200,7 +199,7 @@ public class UserContributionImpl implements UserContributionServices {
             calendar.add(Calendar.YEAR, yearsSinceStart + 1);
             Date nextRecurringIncrease = calendar.getTime();
 
-            double payCheckCountTillNextIncrease = paycheckCalculator.getPayCheckCount(payFrequency, updatedAt , nextRecurringIncrease);
+            double payCheckCountTillNextIncrease = paycheckCalculator.getPayCheckCount(payFrequency, updatedAt, nextRecurringIncrease);
             double payCountSinceUpdatedAt = paycheckCalculator.getPayCheckCount(payFrequency, updatedAt, currentDate);
 
             int paycheckNumber = 0;
