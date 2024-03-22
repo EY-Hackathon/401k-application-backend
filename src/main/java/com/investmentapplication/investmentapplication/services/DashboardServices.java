@@ -10,3 +10,4 @@ public interface DashboardServices {
 
     double getTotalEarnings(String email);
 }
+

@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserContributionUpdateDTO {
-    private Double recurringValue;
-    private Double userCurrentContribution;
+    private String email;
+    private Double recurringPercentage;
+    private Double userCurrentContributionPercentage;
 }

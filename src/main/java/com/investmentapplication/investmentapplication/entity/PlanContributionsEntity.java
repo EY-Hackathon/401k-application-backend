@@ -26,7 +26,6 @@ public class PlanContributionsEntity {
     private double moneyPurchasePlans;
     private double ESOPs;
     private double governmentalPlans;
-
     private double plans457;
     private double multipleEmployerPlans;
     private String email;

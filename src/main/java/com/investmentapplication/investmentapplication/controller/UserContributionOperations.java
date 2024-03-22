@@ -1,5 +1,6 @@
 package com.investmentapplication.investmentapplication.controller;
 
+import com.investmentapplication.investmentapplication.dto.UserContributionUpdateDTO;
 import com.investmentapplication.investmentapplication.entity.UserContributionsEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,5 @@ public interface UserContributionOperations {
     ResponseEntity<Object> getUserContribution(@RequestParam String email);
 
     @PostMapping("/userContribution")
-    ResponseEntity<Object> updateUserContribution(@RequestParam String email, @RequestBody List<UserContributionsEntity> userContribution);
-
-
+    ResponseEntity<Object> updateUserContribution(@RequestParam String email, @RequestBody List<UserContributionUpdateDTO> userContribution);
 }

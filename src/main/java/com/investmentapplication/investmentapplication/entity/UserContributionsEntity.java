@@ -16,7 +16,7 @@ public class UserContributionsEntity {
     @Id
     private String email;
 
-    private long originalContributionPercentage;
+    private Double originalContributionPercentage;
 
     private Date planStartDate;
 

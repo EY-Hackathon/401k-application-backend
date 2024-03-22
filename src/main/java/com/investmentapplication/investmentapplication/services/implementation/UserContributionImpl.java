@@ -1,7 +1,10 @@
 package com.investmentapplication.investmentapplication.services.implementation;
 
+import com.investmentapplication.investmentapplication.dto.UserContributionUpdateDTO;
+import com.investmentapplication.investmentapplication.entity.UserAccountsEntity;
 import com.investmentapplication.investmentapplication.entity.UserContributionsEntity;
 import com.investmentapplication.investmentapplication.entity.UserEmploymentEntity;
+import com.investmentapplication.investmentapplication.repository.UserAccountsRepository;
 import com.investmentapplication.investmentapplication.repository.UserContributionsRepository;
 import com.investmentapplication.investmentapplication.repository.UserEmploymentRepository;
 import com.investmentapplication.investmentapplication.services.UserContributionServices;
@@ -16,6 +19,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+
+import static org.apache.logging.log4j.util.Strings.EMPTY;
 
 @Getter
 enum PayFrequencyYearlyCount {
@@ -50,6 +55,9 @@ public class UserContributionImpl implements UserContributionServices {
     UserEmploymentRepository userEmploymentRepository;
 
     @Autowired
+    UserAccountsRepository userAccountsRepository;
+
+    @Autowired
     PaycheckCalculator paycheckCalculator;
 
     public List<UserContributionsEntity> getUserContribution(String email) {
@@ -57,50 +65,88 @@ public class UserContributionImpl implements UserContributionServices {
         return userContributionsRepository.findByEmail(email);
     }
 
-    public String updateUserContribution(String email, List<UserContributionsEntity> userContributions) {
+    public String updateUserContribution(String email, List<UserContributionUpdateDTO> userContributions) {
         List<UserContributionsEntity> existingUserDetails = userContributionsRepository.findByEmail(email);
+        List<String> userEmailList = existingUserDetails.stream().map(UserContributionsEntity::getEmail).toList();
+        String userEmail = userEmailList.get(0) != null ? userEmailList.get(0) : EMPTY;
         UserEmploymentEntity userEmploymentDetails = userEmploymentRepository.findByEmail(email);
         Double salary = userEmploymentDetails.getAnnualSalary();
 
-        existingUserDetails.forEach(contribution -> {
-            userContributions.stream()
-                    .filter(update -> contribution.getEmail().equals(update.getEmail()))
-                    .findFirst()
-                    .ifPresent(update -> {
-                        if (update.getCurrentContributionPercentage() != null) {
-                            Double totalContributionValue = contribution.getTotalContributionValue();
-                            if (totalContributionValue == null) {
-                                totalContributionValue = 0.0; // Initialize to zero if null
+        if(!userEmail.isEmpty() && userEmail.equals(email)){
+            existingUserDetails.forEach(contribution -> {
+                userContributions.stream()
+                        .filter(update -> contribution.getEmail().equals(update.getEmail()))
+                        .findFirst()
+                        .ifPresent(update -> {
+                            if (update.getUserCurrentContributionPercentage() != null) {
+                                Double totalContributionValue = contribution.getTotalContributionValue();
+                                if (totalContributionValue == null) {
+                                    totalContributionValue = 0.0; // Initialize to zero if null
+                                }
+                                Map<String, Object> TotalContribution = calculateTotalContributionValue(
+                                        contribution.getRecurringPercentage(),
+                                        salary,
+                                        contribution.getCurrentContributionPercentage(),
+                                        contribution.getUpdatedAt(),
+                                        contribution.getActualPlanStartDate(),
+                                        contribution.getPayFrequency(),
+                                        totalContributionValue
+                                );
+                                contribution.setTotalContributionValue(
+                                        (double) TotalContribution.get("updatedContributionValue")
+                                );
+                                contribution.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+                                contribution.setCurrentContributionPercentage(update.getUserCurrentContributionPercentage());
+                                double newContributionValue = salary * (update.getUserCurrentContributionPercentage() / 100.0);
+                                contribution.setContributionValue(newContributionValue);
+                                int count = PayFrequencyYearlyCount.getCountForPayFrequency(contribution.getPayFrequency());
+                                Double perPayCheck = newContributionValue/count;
+                                contribution.setPerPayCheck(perPayCheck);
                             }
-                            Map<String, Object> TotalContribution = calculateTotalContributionValue(
-                                    contribution.getRecurringPercentage(),
-                                    salary,
-                                    contribution.getCurrentContributionPercentage(),
-                                    contribution.getUpdatedAt(),
-                                    contribution.getActualPlanStartDate(),
-                                    contribution.getPayFrequency(),
-                                    totalContributionValue
-                            );
-                            contribution.setTotalContributionValue(
-                                    (double) TotalContribution.get("updatedContributionValue")
-                            );
-                            contribution.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-                            contribution.setCurrentContributionPercentage(update.getCurrentContributionPercentage());
-                            double newContributionValue = salary * (update.getCurrentContributionPercentage() / 100.0);
-                            contribution.setContributionValue(newContributionValue);
-                            int count = PayFrequencyYearlyCount.getCountForPayFrequency(contribution.getPayFrequency());
-                            Double perPayCheck = newContributionValue/count;
-                            contribution.setPerPayCheck(perPayCheck);
-                        }
-                        if (update.getRecurringPercentage() != null) {
-                            contribution.setRecurringPercentage(update.getRecurringPercentage());
-                        }
-                    });
-        });
+                            if (update.getRecurringPercentage() != null) {
+                                contribution.setRecurringPercentage(update.getRecurringPercentage());
+                            }
+                        });
+                userContributionsRepository.saveAll(existingUserDetails);
+            });
+        }
+        else{
+            //create a new record for new user
+            UserContributionsEntity userContributionsEntity = new UserContributionsEntity();
+            List<UserAccountsEntity> userAccountDetails = userAccountsRepository.findByEmail(email);
+            List<String> userAccountsEmailList = userAccountDetails.stream().map(UserAccountsEntity::getEmail).toList();
+            String accountEmail = userAccountsEmailList.get(0) != null ? userAccountsEmailList.get(0) : EMPTY;
+            Date currentDate = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(currentDate);
 
-        userContributionsRepository.saveAll(existingUserDetails);
+            // Add one month to the Calendar
+            calendar.add(Calendar.MONTH, 1);
 
-        return null;
+            Date actualPlanStartDate = calendar.getTime();
+
+            if(!accountEmail.isEmpty() && accountEmail.equals(email)){
+                userContributions.forEach(updatedUserContribution -> {
+                    userContributionsEntity.setEmail(updatedUserContribution.getEmail());
+                    userContributionsEntity.setOriginalContributionPercentage(updatedUserContribution.getUserCurrentContributionPercentage());
+                    userContributionsEntity.setPlanStartDate(currentDate);
+                    userContributionsEntity.setActualPlanStartDate(actualPlanStartDate);
+                    userContributionsEntity.setPerPayCheck((updatedUserContribution.getUserCurrentContributionPercentage() * salary) / 100);
+                    userContributionsEntity.setPayFrequency(userEmploymentDetails.getPayFrequency());
+                    userContributionsEntity.setCurrentContributionPercentage(updatedUserContribution.getUserCurrentContributionPercentage());
+                    userContributionsEntity.setRecurringPercentage(updatedUserContribution.getRecurringPercentage());
+                    userContributionsEntity.setContributionValue((salary*updatedUserContribution.getUserCurrentContributionPercentage())/100);
+                    userContributionsEntity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+                    userContributionsEntity.setTotalContributionValue((double) 0);
+                    userContributionsEntity.setTotalYtdContributionValue((double) 0);
+                    userContributionsEntity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+                });
+                userContributionsRepository.save(userContributionsEntity);
+            }
+        }
+
+
+        return "Updated Successfully";
     }
 
     public Map<String, Object> calculateTotalContributionValue(Double recurringPercentage, Double salary, Double currentContributionPercentage, Date updatedAt, Date acutalPlanStartDate, String payFrequency, double totalContributionValue) {

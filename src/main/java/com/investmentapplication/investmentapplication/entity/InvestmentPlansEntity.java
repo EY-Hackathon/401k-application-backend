@@ -13,7 +13,6 @@ import java.sql.Timestamp;
 
 public class InvestmentPlansEntity {
 
-
     @Id
     private String planName;
     private String plansDesc;

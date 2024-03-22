@@ -1,5 +1,6 @@
 package com.investmentapplication.investmentapplication.controller;
 
+import com.investmentapplication.investmentapplication.dto.UserContributionUpdateDTO;
 import com.investmentapplication.investmentapplication.entity.UserContributionsEntity;
 import com.investmentapplication.investmentapplication.services.UserContributionServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class UserContributionController implements UserContributionOperations{
     }
 
     @Override
-    public ResponseEntity<Object> updateUserContribution(String email, List<UserContributionsEntity> userContribution){
+    public ResponseEntity<Object> updateUserContribution(String email, List<UserContributionUpdateDTO> userContribution){
         String response = userContributionServices.updateUserContribution(email, userContribution);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

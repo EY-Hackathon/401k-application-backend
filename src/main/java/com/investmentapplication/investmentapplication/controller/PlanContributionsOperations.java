@@ -12,5 +12,4 @@ public interface PlanContributionsOperations {
 
     @PostMapping("/plancontributions")
     ResponseEntity<Object> updatePlanContribution(@RequestParam String email, @RequestBody PlanContributionsEntity planContribution);
-
 }
