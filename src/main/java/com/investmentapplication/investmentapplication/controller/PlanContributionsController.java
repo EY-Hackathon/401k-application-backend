@@ -1,6 +1,7 @@
 package com.investmentapplication.investmentapplication.controller;
 
 import com.investmentapplication.investmentapplication.entity.PlanContributionsEntity;
+import com.investmentapplication.investmentapplication.exception.PlanContributionException;
 import com.investmentapplication.investmentapplication.services.PlanContributionsServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,14 +16,31 @@ public class PlanContributionsController implements PlanContributionsOperations 
     @Autowired
     PlanContributionsServices planContributionsServices;
 
+    @Override
     public ResponseEntity<Object> getPlanContribution(String email) {
-        PlanContributionsEntity planContribution = planContributionsServices.getPlanContribution(email);
-        return new ResponseEntity<>(planContribution, HttpStatus.OK);
+        try {
+            PlanContributionsEntity planContribution = planContributionsServices.getPlanContribution(email);
+            return new ResponseEntity<>(planContribution, HttpStatus.OK);
+        } catch (PlanContributionException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @Override
     public ResponseEntity<Object> updatePlanContribution(String email, PlanContributionsEntity planContribution) {
+        try {
+            double sum = calculateSum(planContribution);
+            if (sum != 100) {
+                throw new PlanContributionException("The investments do not sum up to 100%");
+            }
+            String response = planContributionsServices.updatePlanContribution(email, planContribution);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (PlanContributionException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
+    private double calculateSum(PlanContributionsEntity planContribution) {
         double sum = 0.0;
         Class<?> clazz = planContribution.getClass();
         Field[] fields = clazz.getDeclaredFields();
@@ -37,12 +55,7 @@ public class PlanContributionsController implements PlanContributionsOperations 
                 e.printStackTrace();
             }
         }
-        if(sum == 100){
-            String response = planContributionsServices.updatePlanContribution(email, planContribution);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }
-        return new ResponseEntity<>("The investments do not sum up to 100%", HttpStatus.BAD_REQUEST);
+        return sum;
     }
+
 }
-
-
