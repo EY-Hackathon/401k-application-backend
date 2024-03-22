@@ -19,7 +19,7 @@ public class UserProfileDto {
     private String phoneNumber;
     private Date dateofbirth;
     private String employername;
-    private Date employment_start_date;
-    private double annual_salary;
+    private Date employmentstartdate;
+    private Double annualsalary;
     private String payfrequency;
 }

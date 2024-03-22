@@ -33,7 +33,7 @@ public class EmployerMatchImpl implements EmployerMatchServices {
         double totalEmployerMatchValue = 0.0;
 
         EmploymentDetailsEntity employeeDetails = employmentDetailsRepository.findByEmail(email);
-        Date employeeStartDate = employeeDetails.getEmploymentStartDate();
+        Date employeeStartDate = employeeDetails.getEmploymentstartdate();
         Date today = new Date();
 
         Instant startInstant = employeeStartDate.toInstant();
@@ -56,7 +56,7 @@ public class EmployerMatchImpl implements EmployerMatchServices {
             employedSinceYears--;
         }
 
-        List<EmployerMatchEntity> employerMatchDetails = employerMatchRepository.findByEmployerName(employeeDetails.getEmployerName());
+        List<EmployerMatchEntity> employerMatchDetails = employerMatchRepository.findByEmployerName(employeeDetails.getEmployername());
 
         List<UserContributionsEntity> userContributions = userContributionsRepository.findByEmail(email);
         List<Double> userContributionPercentageList = userContributions.stream().map(UserContributionsEntity::getCurrentContributionPercentage).toList();
@@ -77,7 +77,7 @@ public class EmployerMatchImpl implements EmployerMatchServices {
                 for (int i = 0; i < totalYearsToContribute; i++) {
                     double employerMatchPercentageForYear = (employerMatchPercentage / employerMatchMaxContribution);
                     double employerMatchValueBasedOnUserContribution = employerMatchPercentageForYear * userContributionPercentage / 100;
-                    totalEmployerMatchValue += employerMatchValueBasedOnUserContribution * employeeDetails.getAnnualSalary();
+                    totalEmployerMatchValue += employerMatchValueBasedOnUserContribution * employeeDetails.getAnnualsalary();
                 }
 
                 // Check if there are remaining months after completed years
@@ -93,7 +93,7 @@ public class EmployerMatchImpl implements EmployerMatchServices {
                     if (employedSinceYears >= nextEmploymentYears) {
                         double employerMatchPercentageForYear = (nextEmployerMatchPercentage / nextEmployerMatchMaxContribution);
                         double employerMatchValueBasedOnUserContribution = employerMatchPercentageForYear * userContributionPercentage / 100;
-                        totalEmployerMatchValue += employerMatchValueBasedOnUserContribution * employeeDetails.getAnnualSalary();
+                        totalEmployerMatchValue += employerMatchValueBasedOnUserContribution * employeeDetails.getAnnualsalary();
                     }
                 }
             }
@@ -114,6 +114,6 @@ public class EmployerMatchImpl implements EmployerMatchServices {
     public List<EmployerMatchEntity> GetEmployerMatchDetails(String email) {
         EmploymentDetailsEntity employeeDetails = employmentDetailsRepository.findByEmail(email);
 
-        return employerMatchRepository.findByEmployerName(employeeDetails.getEmployerName());
+        return employerMatchRepository.findByEmployerName(employeeDetails.getEmployername());
     }
 }

@@ -18,11 +18,11 @@ public class UserEmploymentEntity {
 
     private String email;
 
-    private String employment_Name;
+    private String employmentName;
 
-    private Date employmentStartDate;
+    private Date employmentstartdate;
 
-    private Double annualSalary;
+    private Double annualsalary;
 
-    private String payFrequency;
+    private String payfrequency;
 }

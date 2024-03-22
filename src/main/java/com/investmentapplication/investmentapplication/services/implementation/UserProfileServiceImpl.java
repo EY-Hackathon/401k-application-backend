@@ -43,17 +43,17 @@ public class UserProfileServiceImpl implements UserProfileService {
         userProfile.setDateofbirth(userEntity.getDateofbirth());
         userProfile.setSsn(userEntity.getSsn());
 
-        if (employmentDetails.getEmployerName() == null || employmentDetails.getEmail() == null
-                || employmentDetails.getPayFrequency() == null
-                || employmentDetails.getEmploymentStartDate() == null) {
+        if (employmentDetails.getEmployername() == null || employmentDetails.getEmail() == null
+                || employmentDetails.getPayfrequency() == null
+                || employmentDetails.getEmploymentstartdate() == null) {
             throw new EmploymentDetailsException(ErrorCode.INVALID_DATA, "Some employment details are missing or empty for email: " + email);
         }// if data is null we need to throw exception
 
-        userProfile.setEmployername(employmentDetails.getEmployerName());
+        userProfile.setEmployername(employmentDetails.getEmployername());
         userProfile.setEmail(employmentDetails.getEmail());
-        userProfile.setAnnual_salary(employmentDetails.getAnnualSalary());
-        userProfile.setPayfrequency(employmentDetails.getPayFrequency());
-        userProfile.setEmployment_start_date(employmentDetails.getEmploymentStartDate());
+        userProfile.setAnnualsalary(employmentDetails.getAnnualsalary());
+        userProfile.setPayfrequency(employmentDetails.getPayfrequency());
+        userProfile.setEmploymentstartdate(employmentDetails.getEmploymentstartdate());
 
         return userProfile;
     }
@@ -61,27 +61,30 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public void updateUserProfile(String email, UserProfileDto userProfile) {
         UserEntity userEntity = userRepository.findByEmail(email);
-        if (userEntity == null) {
-            throw new UserNotFoundException(ErrorCode.USER_NOT_FOUND, "User profile not found for email: " + email);
-        }
-        userEntity.setFirstname(userProfile.getFirstname());
-        userEntity.setLastname(userProfile.getLastname());
-        userEntity.setMailingaddress(userProfile.getMailingaddress());
-        userEntity.setPhonenumbeer(userProfile.getPhoneNumber());
-        userEntity.setDateofbirth(userProfile.getDateofbirth());
-        userEntity.setSsn(userProfile.getSsn());
-        userRepository.save(userEntity); //save values in user repository
+        if((userProfile.getFirstname())==null)
+            userEntity.setFirstname(userProfile.getFirstname());
+        if((userProfile.getLastname())==null)
+            userEntity.setLastname(userProfile.getLastname());
+        if((userProfile.getMailingaddress())==null)
+            userEntity.setMailingaddress(userProfile.getMailingaddress());
+        if((userProfile.getPhoneNumber())==null)
+            userEntity.setPhonenumbeer(userProfile.getPhoneNumber());
+        if((userProfile.getDateofbirth())==null)
+            userEntity.setDateofbirth(userProfile.getDateofbirth());
+        if((userProfile.getSsn())==null)
+            userEntity.setSsn(userProfile.getSsn());
+            userRepository.save(userEntity); //save values in user repository
 
         EmploymentDetailsEntity employmentDetails = employmentDetailsRepository.findByEmail(email);
-        if (employmentDetails == null) {
-            throw new EmploymentDetailsException(ErrorCode.EMPLOYMENT_DETAILS_NOT_FOUND, "Employment details not found for email: " + email);
+        if(userProfile.getEmployername()==null)
+            employmentDetails.setEmployername(userProfile.getEmployername());
+        if(userProfile.getEmploymentstartdate()==null)
+            employmentDetails.setEmploymentstartdate(userProfile.getEmploymentstartdate());
+        if(userProfile.getAnnualsalary()==null)
+            employmentDetails.setAnnualsalary(userProfile.getAnnualsalary());
+        if(userProfile.getPayfrequency()==null)
+            employmentDetails.setPayfrequency(userProfile.getPayfrequency());
+            employmentDetailsRepository.save(employmentDetails); //save values in employmentDetails repository
         }
-        employmentDetails.setEmployerName(userProfile.getEmployername());
-        employmentDetails.setEmploymentStartDate(userProfile.getEmployment_start_date());
-        employmentDetails.setAnnualSalary(userProfile.getAnnual_salary());
-        employmentDetails.setPayFrequency(userProfile.getPayfrequency());
-        employmentDetailsRepository.save(employmentDetails); //save values in employmentDetails repository
     }
 
-
-}

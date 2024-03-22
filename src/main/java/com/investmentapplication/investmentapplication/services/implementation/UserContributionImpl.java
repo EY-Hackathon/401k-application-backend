@@ -60,7 +60,7 @@ public class UserContributionImpl implements UserContributionServices {
     public String updateUserContribution(String email, List<UserContributionsEntity> userContributions) {
         List<UserContributionsEntity> existingUserDetails = userContributionsRepository.findByEmail(email);
         UserEmploymentEntity userEmploymentDetails = userEmploymentRepository.findByEmail(email);
-        Double salary = userEmploymentDetails.getAnnualSalary();
+        Double salary = userEmploymentDetails.getAnnualsalary();
 
         existingUserDetails.forEach(contribution -> {
             userContributions.stream()

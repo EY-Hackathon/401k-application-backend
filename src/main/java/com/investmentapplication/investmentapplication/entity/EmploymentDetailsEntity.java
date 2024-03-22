@@ -10,12 +10,12 @@ import java.util.Date;
 @Table(name = "employmentinfo")
 public class EmploymentDetailsEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String employerName;
+    private String employername;
     private String email;
-    private Date employmentStartDate;
-    private double annualSalary;
-    private String payFrequency;
+    private Date employmentstartdate;
+    private double annualsalary;
+    private String payfrequency;
     private String username;
 }
