@@ -39,11 +39,10 @@ public class UserSignupController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(String.join(", ", errorMessages));
             }
         }
-        if (userSignUpServices.isEmailexists(userSignUpDTO.getEmail() )) {
+        if (userSignUpServices.isEmailExists(userSignUpDTO.getEmail() )) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already exists");
         }
         userSignUpServices.addUser(userSignUpDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
     }
-
 }

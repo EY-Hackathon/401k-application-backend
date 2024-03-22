@@ -22,30 +22,27 @@ public class UserSignUpServicesImpl implements UserSignUpServices {
     @Override
     public void addUser(UserSignUpDTO userSignUpDTO) {
 
-
         UserAccountsEntity userAccountsEntity = new UserAccountsEntity();
-        userAccountsEntity.setFirstname(userSignUpDTO.getFirstname());
-        userAccountsEntity.setLastname(userSignUpDTO.getLastname());
-        userAccountsEntity.setDateofbirth(userSignUpDTO.getDateofbirth());
+        userAccountsEntity.setFirstName(userSignUpDTO.getFirstName());
+        userAccountsEntity.setLastName(userSignUpDTO.getLastName());
+        userAccountsEntity.setDateofBirth(userSignUpDTO.getDateOfBirth());
         userAccountsEntity.setSsn(userSignUpDTO.getSsn());
-        userAccountsEntity.setMailingaddress(userSignUpDTO.getMailingaddress());
+        userAccountsEntity.setMailingAddress(userSignUpDTO.getMailingAddress());
         userAccountsEntity.setEmail(userSignUpDTO.getEmail());
-        userAccountsEntity.setPhonenumber(userSignUpDTO.getPhonenumber());
+        userAccountsEntity.setPhoneNumber(userSignUpDTO.getPhoneNumber());
         userAccountsEntity.setPassword(userSignUpDTO.getPassword());
         userAccountsRepository.save(userAccountsEntity);
 
         UserEmploymentEntity userEmploymentEntity = new UserEmploymentEntity();
         userEmploymentEntity.setEmail(userSignUpDTO.getEmail());
-        userEmploymentEntity.setEmploymentname(userSignUpDTO.getEmploymentName());
-        userEmploymentEntity.setEmploymentstartdate(userSignUpDTO.getEmploymentstartdate());
-        userEmploymentEntity.setAnnualsalary(userSignUpDTO.getAnnualsalary());
-        userEmploymentEntity.setPayfrequency(userSignUpDTO.getPayfrequency());
+        userEmploymentEntity.setEmployerName(userSignUpDTO.getEmployerName());
+        userEmploymentEntity.setEmploymentStartDate(userSignUpDTO.getEmploymentStartDate());
+        userEmploymentEntity.setAnnualSalary(userSignUpDTO.getAnnualSalary());
+        userEmploymentEntity.setPayFrequency(userSignUpDTO.getPayFrequency());
         userEmploymentRepository.save(userEmploymentEntity);
     }
 
-    public boolean isEmailexists(String email) throws Exception {
-
-
+    public boolean isEmailExists(String email) throws Exception {
         if (userAccountsRepository.findByEmail(email) == null) {
             throw new Exception("User already exists");
         }

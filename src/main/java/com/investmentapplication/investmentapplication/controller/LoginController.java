@@ -1,6 +1,7 @@
 package com.investmentapplication.investmentapplication.controller;
 
 import com.investmentapplication.investmentapplication.entity.TokenResponse;
+import com.investmentapplication.investmentapplication.entity.UserAccountsEntity;
 import com.investmentapplication.investmentapplication.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,7 @@ public class LoginController implements LoginOperations{
     UserService userService;
 
 
-    public ResponseEntity<Object> login(UserEntity request) throws UsernameNotFoundException {
+    public ResponseEntity<Object> login(UserAccountsEntity request) throws UsernameNotFoundException {
         TokenResponse response= userService.loginService(request);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }

@@ -1,5 +1,6 @@
 package com.investmentapplication.investmentapplication.controller;
 
+import com.investmentapplication.investmentapplication.entity.UserAccountsEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,5 +10,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface LoginOperations {
 
     @PostMapping("/login")
-    ResponseEntity<Object> login(@RequestBody UserEntity request);
+    ResponseEntity<Object> login(@RequestBody UserAccountsEntity request);
 }

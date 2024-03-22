@@ -19,7 +19,7 @@ public class UserEmploymentEntity {
 
     private String email;
 
-    private String employmentName;
+    private String employerName;
 
     private Date employmentStartDate;
 

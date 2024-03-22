@@ -49,6 +49,7 @@ public class UserAccountsEntity implements UserDetails {
     private String securityQuestion3;
 
     private String securityQuestion3answer;
+
     private Timestamp updatedAt;
 
     private Timestamp createdAt;

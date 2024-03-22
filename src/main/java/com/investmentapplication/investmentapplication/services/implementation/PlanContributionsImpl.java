@@ -31,18 +31,18 @@ public class PlanContributionsImpl implements PlanContributionsServices {
             throw new PlanContributionException(ErrorCode.PLAN_CONTRIBUTION_NOT_FOUND, "Plan contribution not found for email: " + email);
         }
 
-        existingRecord.setGovernmental_plans(planContribution.getGovernmental_plans());
-        existingRecord.setDefined_benefit_plan((planContribution.getDefined_benefit_plan()));
+        existingRecord.setGovernmentalPlans(planContribution.getGovernmentalPlans());
+        existingRecord.setDefinedBenefitPlan((planContribution.getDefinedBenefitPlan()));
         existingRecord.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         existingRecord.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         existingRecord.setPlans457(planContribution.getPlans457());
-        existingRecord.setMoney_purchase_plans(planContribution.getMoney_purchase_plans());
-        existingRecord.setProfit_sharing_plans(planContribution.getProfit_sharing_plans());
-        existingRecord.setMultiple_employer_plans(planContribution.getMultiple_employer_plans());
+        existingRecord.setMoneyPurchasePlans(planContribution.getMoneyPurchasePlans());
+        existingRecord.setProfitSharingPlans(planContribution.getProfitSharingPlans());
+        existingRecord.setMultipleEmployerPlans(planContribution.getMultipleEmployerPlans());
         existingRecord.setPlans403b(planContribution.getPlans403b());
         existingRecord.setESOPs(planContribution.getESOPs());
-        existingRecord.setPayroll_Deduction_IRAs(planContribution.getPayroll_Deduction_IRAs());
-        existingRecord.setRoth_IRA(planContribution.getRoth_IRA());
+        existingRecord.setPayrollDeductionIRAs(planContribution.getPayrollDeductionIRAs());
+        existingRecord.setRothIRA(planContribution.getRothIRA());
         existingRecord.setSARSEP(planContribution.getSARSEP());
         existingRecord.setSEP(planContribution.getSEP());
         existingRecord.setEmail(planContribution.getEmail());

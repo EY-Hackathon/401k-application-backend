@@ -14,35 +14,35 @@ import java.util.Date;
 public class UserSignUpDTO {
 
     private Integer id;
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
     @NotNull(message = "Date of birth is required")
     @AgeGreaterThan(message = "Age must be greater than or equal to 18")
-    private Date dateofbirth;
+    private Date dateOfBirth;
 
     @NotNull(message = "SSN is required")
     private Long ssn;
 
-    private String mailingaddress;
+    private String mailingAddress;
 
     @NotBlank(message = "Password is required")
     private String password;
 
-    private String phonenumber;
+    private String phoneNumber;
 
     @NotBlank(message = "Email is required")
     private String email;
 
     @NotBlank(message = "Employer name is required")
-    private String employmentName;
+    private String employerName;
 
     @NotNull(message = "Employment start date is required")
-    private Date employmentstartdate;
+    private Date employmentStartDate;
 
     @NotNull(message = "Annual salary is required")
-    private Double annualsalary;
+    private Double annualSalary;
 
     @NotBlank(message = "Pay frequency is required")
-    private String payfrequency;
+    private String payFrequency;
 
 }

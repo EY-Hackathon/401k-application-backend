@@ -1,6 +1,7 @@
 package com.investmentapplication.investmentapplication.services.implementation;
 
-import com.investmentapplication.investmentapplication.repository.UserRepository;
+import com.investmentapplication.investmentapplication.entity.UserAccountsEntity;
+import com.investmentapplication.investmentapplication.repository.UserAccountsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,12 +12,12 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserAccountsRepository userRepository;
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userRepository.findByUsername(username);
+        UserAccountsEntity user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }

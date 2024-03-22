@@ -9,17 +9,17 @@ import java.util.Date;
 @Setter
 public class UserProfileDto {
     private long id;
-    private String username;
+    private String userName;
     private String email;
     private String password;
-    private String firstname;
-    private String lastname;
-    private String mailingaddress;
-    private String ssn;
+    private String firstName;
+    private String lastName;
+    private String mailingAddress;
+    private long ssn;
     private String phoneNumber;
-    private Date dateofbirth;
-    private String employername;
-    private Date employmentstartdate;
-    private Double annualsalary;
-    private String payfrequency;
+    private Date dateOfBirth;
+    private String employerName;
+    private Date employmentStartDate;
+    private Double annualSalary;
+    private String payFrequency;
 }

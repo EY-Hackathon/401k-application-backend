@@ -42,7 +42,7 @@ public class DashboardServicesImpl implements DashboardServices {
         double[] totalContributionValue = new double[1];
         List<UserContributionsEntity> userContribution = userContributionsRepository.findByEmail(email);
         UserEmploymentEntity userEmploymentDetails = userEmploymentRepository.findByEmail(email);
-        Double salary = userEmploymentDetails.getAnnualsalary();
+        Double salary = userEmploymentDetails.getAnnualSalary();
 
         userContribution.forEach(contribution -> {
             if(email.equals(contribution.getEmail())){
