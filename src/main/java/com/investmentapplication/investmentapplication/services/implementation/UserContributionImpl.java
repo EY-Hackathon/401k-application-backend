@@ -67,8 +67,11 @@ public class UserContributionImpl implements UserContributionServices {
 
     public String updateUserContribution(String email, List<UserContributionUpdateDTO> userContributions) {
         List<UserContributionsEntity> existingUserDetails = userContributionsRepository.findByEmail(email);
-        List<String> userEmailList = existingUserDetails.stream().map(UserContributionsEntity::getEmail).toList();
-        String userEmail = userEmailList.get(0) != null ? userEmailList.get(0) : EMPTY;
+        String userEmail = EMPTY;
+        if(!existingUserDetails.isEmpty()){
+            List<String> userEmailList = existingUserDetails.stream().map(UserContributionsEntity::getEmail).toList();
+            userEmail = userEmailList.get(0) != null ? userEmailList.get(0) : EMPTY;
+        }
         UserEmploymentEntity userEmploymentDetails = userEmploymentRepository.findByEmail(email);
         Double salary = userEmploymentDetails.getAnnualSalary();
 

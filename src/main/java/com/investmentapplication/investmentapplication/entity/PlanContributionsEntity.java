@@ -16,6 +16,8 @@ public class PlanContributionsEntity {
 
 
     @Id
+    private String email;
+
     private double RothIRA;
     private double plans403b;
     private double SEP;
@@ -28,7 +30,7 @@ public class PlanContributionsEntity {
     private double governmentalPlans;
     private double plans457;
     private double multipleEmployerPlans;
-    private String email;
+
 
     private Timestamp updatedAt;
 
