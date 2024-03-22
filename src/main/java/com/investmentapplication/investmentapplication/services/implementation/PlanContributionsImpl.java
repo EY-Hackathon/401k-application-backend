@@ -100,7 +100,6 @@ public class PlanContributionsImpl implements PlanContributionsServices {
             planContributionsRepository.save(newRecord);
         }
         // Save the updated record
-        planContributionsRepository.save(existingRecord);
         return "Updated successfully";
     }
 
