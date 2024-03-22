@@ -14,13 +14,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserAccountsRepository userRepository;
 
-
+    // This method implements the loadUserByUsername method of UserDetailsService interface
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // Retrieve user information from the database based on the provided username
         UserAccountsEntity user = userRepository.findByUsername(username);
+
+        // If no user found with the provided username, throw UsernameNotFoundException
         if (user == null) {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
+
+        // Return the user details fetched from the database
         return user;
     }
 }

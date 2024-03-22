@@ -31,19 +31,36 @@ public class DashboardServicesImpl implements DashboardServices {
 
     @Override
     public double getTotalBalance(String email) {
+        // Get the total contribution, total earnings, and employer match for the user
         double totalContribution = getTotalContribution(email);
         double totalEarnings = getTotalEarnings(email);
         double employerMatch = employerMatchServices.GetEmployerMatchValue(email);
+
+        // Return the sum of total contribution, total earnings, and employer match
         return totalContribution + totalEarnings + employerMatch;
+
     }
+
+
+    /**
+     * Retrieves the total contribution of the user.
+     * @param email The email of the user.
+     * @return The total contribution of the user.
+     */
 
     @Override
     public double getTotalContribution(String email){
+
+        // Initialize an array to store the total contribution value
         double[] totalContributionValue = new double[1];
+
+        // Retrieve user contribution and employment details from repositories
         List<UserContributionsEntity> userContribution = userContributionsRepository.findByEmail(email);
         UserEmploymentEntity userEmploymentDetails = userEmploymentRepository.findByEmail(email);
         Double salary = userEmploymentDetails.getAnnualSalary();
 
+
+        // Calculate total contribution based on user contribution data
         userContribution.forEach(contribution -> {
             if(email.equals(contribution.getEmail())){
                 Map<String, Object> tempTotalContributionValue  = userContributionClass.calculateTotalContributionValue(
@@ -59,13 +76,22 @@ public class DashboardServicesImpl implements DashboardServices {
             }
         });
 
+        // Return the total contribution value
         return totalContributionValue[0];
     }
-
+    /**
+     * Retrieves the year-to-date contribution of the user.
+     * @param email The email of the user.
+     * @return The year-to-date contribution of the user.
+     */
     @Override
     public double getYTDContribution(String email) {
+
         Date currentDate = new Date();
+        // Retrieve user contribution data from repository
         List<UserContributionsEntity> userContributionData = userContributionsRepository.findByEmail(email);
+
+        // Extract necessary data for calculation
         List<Double> contributionPerPayCheck = userContributionData.stream().map(UserContributionsEntity::getPerPayCheck).toList();
         List<String> payFrequency = userContributionData.stream().map(UserContributionsEntity::getPayFrequency).toList();
         Optional<Date> planStartDate = userContributionData.stream().map(UserContributionsEntity::getActualPlanStartDate).findFirst();
@@ -87,6 +113,12 @@ public class DashboardServicesImpl implements DashboardServices {
 
         return checkCount * contributionPerPayCheck.get(0);
     }
+
+    /**
+     * Retrieves the total earnings of the user.
+     * @param email The email of the user.
+     * @return The total earnings of the user.
+     */
 
     @Override
     public double getTotalEarnings(String email) {

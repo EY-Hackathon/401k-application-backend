@@ -18,10 +18,11 @@ public class UserSignUpServicesImpl implements UserSignUpServices {
     @Autowired
     private UserEmploymentRepository userEmploymentRepository;
 
-
+    // This method adds a new user based on the information provided in the DTO
     @Override
     public void addUser(UserSignUpDTO userSignUpDTO) {
 
+        // Creating a new UserAccountsEntity and setting its properties based on the DTO
         UserAccountsEntity userAccountsEntity = new UserAccountsEntity();
         userAccountsEntity.setFirstName(userSignUpDTO.getFirstName());
         userAccountsEntity.setLastName(userSignUpDTO.getLastName());
@@ -31,21 +32,29 @@ public class UserSignUpServicesImpl implements UserSignUpServices {
         userAccountsEntity.setEmail(userSignUpDTO.getEmail());
         userAccountsEntity.setPhoneNumber(userSignUpDTO.getPhoneNumber());
         userAccountsEntity.setPassword(userSignUpDTO.getPassword());
+
+        // Saving the user account entity to the repository
         userAccountsRepository.save(userAccountsEntity);
 
+        // Creating a new UserEmploymentEntity and setting its properties based on the DTO
         UserEmploymentEntity userEmploymentEntity = new UserEmploymentEntity();
         userEmploymentEntity.setEmail(userSignUpDTO.getEmail());
         userEmploymentEntity.setEmployerName(userSignUpDTO.getEmployerName());
         userEmploymentEntity.setEmploymentStartDate(userSignUpDTO.getEmploymentStartDate());
         userEmploymentEntity.setAnnualSalary(userSignUpDTO.getAnnualSalary());
         userEmploymentEntity.setPayFrequency(userSignUpDTO.getPayFrequency());
+
+        // Saving the user employment entity to the repository
         userEmploymentRepository.save(userEmploymentEntity);
     }
 
+    // This method checks if an email already exists in the user accounts repository
     public boolean isEmailExists(String email) throws Exception {
-        if (userAccountsRepository.findByEmail(email) == null) {
+        // If user with the provided email exists, throw an exception
+        if (userAccountsRepository.findByEmail(email) != null) {
             throw new Exception("User already exists");
         }
+        // Otherwise, return false indicating email does not exist
         return false;
     }
 }
