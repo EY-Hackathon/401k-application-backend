@@ -1,6 +1,5 @@
 package com.investmentapplication.investmentapplication.controller;
 
-import com.investmentapplication.investmentapplication.entity.UserEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

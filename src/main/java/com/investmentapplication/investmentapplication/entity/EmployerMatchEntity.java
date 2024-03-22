@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Setter
@@ -21,4 +22,8 @@ public class EmployerMatchEntity {
     private double employmentYears;
 
     private double employerMatchMaxContribution;
+
+    private Timestamp updatedAt;
+
+    private Timestamp createdAt;
 }

@@ -3,6 +3,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 @Entity
 @Getter
@@ -12,10 +13,13 @@ public class EmploymentDetailsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String employername;
+    private String employerName;
     private String email;
-    private Date employmentstartdate;
-    private double annualsalary;
-    private String payfrequency;
-    private String username;
+    private Date employmentStartDate;
+    private double annualSalary;
+    private String payFrequency;
+    private String userName;
+    private Timestamp updatedAt;
+
+    private Timestamp createdAt;
 }

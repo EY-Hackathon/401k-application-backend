@@ -33,4 +33,16 @@ public class UserSignUpDTO {
     @NotBlank(message = "Email is required")
     private String email;
 
+    @NotBlank(message = "Employer name is required")
+    private String employmentName;
+
+    @NotNull(message = "Employment start date is required")
+    private Date employmentstartdate;
+
+    @NotNull(message = "Annual salary is required")
+    private Double annualsalary;
+
+    @NotBlank(message = "Pay frequency is required")
+    private String payfrequency;
+
 }

@@ -2,7 +2,6 @@ package com.investmentapplication.investmentapplication.services.implementation;
 
 import com.investmentapplication.investmentapplication.dto.UserProfileDto;
 import com.investmentapplication.investmentapplication.entity.EmploymentDetailsEntity;
-import com.investmentapplication.investmentapplication.entity.UserEntity;
 import com.investmentapplication.investmentapplication.exception.EmploymentDetailsException;
 import com.investmentapplication.investmentapplication.exception.UserNotFoundException;
 import com.investmentapplication.investmentapplication.repository.EmploymentDetailsRepository;

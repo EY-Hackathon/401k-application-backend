@@ -2,7 +2,9 @@ package com.investmentapplication.investmentapplication.services.implementation;
 
 import com.investmentapplication.investmentapplication.dto.UserSignUpDTO;
 import com.investmentapplication.investmentapplication.entity.UserAccountsEntity;
+import com.investmentapplication.investmentapplication.entity.UserEmploymentEntity;
 import com.investmentapplication.investmentapplication.repository.UserAccountsRepository;
+import com.investmentapplication.investmentapplication.repository.UserEmploymentRepository;
 import com.investmentapplication.investmentapplication.services.UserSignUpServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +15,12 @@ public class UserSignUpServicesImpl implements UserSignUpServices {
     @Autowired
     private UserAccountsRepository userAccountsRepository;
 
+    @Autowired
+    private UserEmploymentRepository userEmploymentRepository;
+
 
     @Override
-    public UserAccountsEntity addUser(UserSignUpDTO userSignUpDTO) {
+    public void addUser(UserSignUpDTO userSignUpDTO) {
 
 
         UserAccountsEntity userAccountsEntity = new UserAccountsEntity();
@@ -27,17 +32,23 @@ public class UserSignUpServicesImpl implements UserSignUpServices {
         userAccountsEntity.setEmail(userSignUpDTO.getEmail());
         userAccountsEntity.setPhonenumber(userSignUpDTO.getPhonenumber());
         userAccountsEntity.setPassword(userSignUpDTO.getPassword());
+        userAccountsRepository.save(userAccountsEntity);
 
-
-        return userAccountsRepository.save(userAccountsEntity);
+        UserEmploymentEntity userEmploymentEntity = new UserEmploymentEntity();
+        userEmploymentEntity.setEmail(userSignUpDTO.getEmail());
+        userEmploymentEntity.setEmploymentname(userSignUpDTO.getEmploymentName());
+        userEmploymentEntity.setEmploymentstartdate(userSignUpDTO.getEmploymentstartdate());
+        userEmploymentEntity.setAnnualsalary(userSignUpDTO.getAnnualsalary());
+        userEmploymentEntity.setPayfrequency(userSignUpDTO.getPayfrequency());
+        userEmploymentRepository.save(userEmploymentEntity);
     }
 
     public boolean isEmailexists(String email) throws Exception {
 
 
-        if (userAccountsRepository.findByEmail(email) != null) {
+        if (userAccountsRepository.findByEmail(email) == null) {
             throw new Exception("User already exists");
         }
-        return true;
+        return false;
     }
 }

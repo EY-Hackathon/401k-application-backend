@@ -1,6 +1,5 @@
 package com.investmentapplication.investmentapplication.services.implementation;
 
-import com.investmentapplication.investmentapplication.entity.UserEntity;
 import com.investmentapplication.investmentapplication.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

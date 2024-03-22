@@ -38,4 +38,6 @@ public class UserContributionsEntity {
 
     private Double totalYtdContributionValue;
 
+    private Timestamp createdAt;
+
 }

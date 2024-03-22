@@ -1,6 +1,5 @@
 package com.investmentapplication.investmentapplication.services.implementation;
 import com.investmentapplication.investmentapplication.entity.TokenResponse;
-import com.investmentapplication.investmentapplication.entity.UserEntity;
 import com.investmentapplication.investmentapplication.exception.InvalidCredentialsException;
 import com.investmentapplication.investmentapplication.exception.UserNotFoundException;
 import com.investmentapplication.investmentapplication.filter.JwtUtil;

@@ -16,19 +16,19 @@ public class PlanContributionsEntity {
 
 
     @Id
-    private double Roth_IRA;
+    private double RothIRA;
     private double plans403b;
     private double SEP;
     private double SARSEP;
-    private double payroll_Deduction_IRAs;
-    private double profit_sharing_plans;
-    private double defined_benefit_plan;
-    private double money_purchase_plans;
+    private double payrollDeductionIRAs;
+    private double profitSharingPlans;
+    private double definedBenefitPlan;
+    private double moneyPurchasePlans;
     private double ESOPs;
-    private double governmental_plans;
+    private double governmentalPlans;
 
     private double plans457;
-    private double multiple_employer_plans;
+    private double multipleEmployerPlans;
     private String email;
 
     private Timestamp updatedAt;

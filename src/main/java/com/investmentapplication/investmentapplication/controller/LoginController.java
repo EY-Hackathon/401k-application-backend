@@ -1,7 +1,6 @@
 package com.investmentapplication.investmentapplication.controller;
 
 import com.investmentapplication.investmentapplication.entity.TokenResponse;
-import com.investmentapplication.investmentapplication.entity.UserEntity;
 import com.investmentapplication.investmentapplication.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

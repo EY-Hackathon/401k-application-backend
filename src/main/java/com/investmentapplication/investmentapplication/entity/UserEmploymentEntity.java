@@ -4,6 +4,7 @@ import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 @Entity
@@ -20,9 +21,13 @@ public class UserEmploymentEntity {
 
     private String employmentName;
 
-    private Date employmentstartdate;
+    private Date employmentStartDate;
 
-    private Double annualsalary;
+    private Double annualSalary;
 
-    private String payfrequency;
+    private String payFrequency;
+
+    private Timestamp updatedAt;
+
+    private Timestamp createdAt;
 }
