@@ -9,6 +9,9 @@ import com.investmentapplication.investmentapplication.services.EmployerMatchSer
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 @Service
@@ -94,8 +97,13 @@ public class DashboardServicesImpl implements DashboardServices {
         // Extract necessary data for calculation
         List<Double> contributionPerPayCheck = userContributionData.stream().map(UserContributionsEntity::getPerPayCheck).toList();
         List<String> payFrequency = userContributionData.stream().map(UserContributionsEntity::getPayFrequency).toList();
-        Optional<Date> planStartDate = userContributionData.stream().map(UserContributionsEntity::getActualPlanStartDate).findFirst();
-        Date actionPlanStartDate = planStartDate.orElse(null);
+        List<Date> actualPlanStartDateList = userContributionData.stream().map(UserContributionsEntity::getActualPlanStartDate).toList();
+        Date actualPlanStartDate = actualPlanStartDateList.get(0);
+
+        Instant startPlanInstant = actualPlanStartDate.toInstant();
+
+        // Convert Instant to LocalDate (using system default time zone)
+        LocalDate actualPlanDate = startPlanInstant.atZone(ZoneId.systemDefault()).toLocalDate();
 
         // Create a Calendar instance
         Calendar calendar = Calendar.getInstance();
@@ -109,7 +117,16 @@ public class DashboardServicesImpl implements DashboardServices {
 
         // Get the first day of the year as a Date object
         Date firstDayOfThisYear = calendar.getTime();
-        double checkCount = paycheckCalculator.getPayCheckCount(payFrequency.get(0), firstDayOfThisYear, currentDate);
+        int currentYear = LocalDate.now().getYear();
+        LocalDate januaryFirstOfThisYear = LocalDate.of(currentYear, 1, 1);
+        double checkCount = 0;
+        if(actualPlanDate.isBefore(januaryFirstOfThisYear)){
+            checkCount = paycheckCalculator.getPayCheckCount(payFrequency.get(0), firstDayOfThisYear, currentDate);
+        }
+        else{
+            checkCount = paycheckCalculator.getPayCheckCount(payFrequency.get(0), actualPlanStartDate, currentDate);
+        }
+
 
         return checkCount * contributionPerPayCheck.get(0);
     }
@@ -122,6 +139,9 @@ public class DashboardServicesImpl implements DashboardServices {
 
     @Override
     public double getTotalEarnings(String email) {
-        return 522;
+        double investmentReturns = Math.random() * (20 - (-20)) + (-20);
+        double totalContributionVal=getTotalContribution(email);
+
+        return totalContributionVal * ( investmentReturns / 100);
     }
 }

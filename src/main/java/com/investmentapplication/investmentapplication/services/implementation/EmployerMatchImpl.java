@@ -48,9 +48,6 @@ public class EmployerMatchImpl implements EmployerMatchServices {
 
         int employedSinceYears = (int) ChronoUnit.YEARS.between(employmentStartDate, endDate);
 
-        int employedSinceMonths = (int) ChronoUnit.MONTHS.between(employmentStartDate, endDate);
-        double remainingMonths = employedSinceMonths % employedSinceYears;
-
 
         if (endDate.getMonthValue() < employmentStartDate.getMonthValue() ||
                 (endDate.getMonthValue() == employmentStartDate.getMonthValue() &&
@@ -63,6 +60,16 @@ public class EmployerMatchImpl implements EmployerMatchServices {
 
         List<UserContributionsEntity> userContributions = userContributionsRepository.findByEmail(email);
         List<Double> userContributionPercentageList = userContributions.stream().map(UserContributionsEntity::getCurrentContributionPercentage).toList();
+        List<Date> actualPlanStartDateList = userContributions.stream().map(UserContributionsEntity::getActualPlanStartDate).toList();
+        Date actualPlanStartDate = actualPlanStartDateList.get(0);
+
+        Instant startPlanInstant = actualPlanStartDate.toInstant();
+
+        // Convert Instant to LocalDate (using system default time zone)
+        LocalDate actualPlanDate = startPlanInstant.atZone(ZoneId.systemDefault()).toLocalDate();
+
+        int planSinceMonths = (int) ChronoUnit.MONTHS.between(actualPlanDate, endDate);
+
         double userContributionPercentage = userContributionPercentageList.get(0);
         //double totalYearsToContribute = employedSinceYears - minYearsToStartMatch;
 
@@ -70,9 +77,12 @@ public class EmployerMatchImpl implements EmployerMatchServices {
             double employerMatchPercentage = details.getEmployerMatchPercentage();
             double employerMatchMaxContribution = details.getEmployerMatchMaxContribution();
             double employmentYearsRequired = details.getEmploymentYears();
+            int employedAndPlanStartDifference =  (int) ChronoUnit.YEARS.between(employmentStartDate, actualPlanDate);
+
 
             // Calculate total years to contribute based on completed years of employment
-            double totalYearsToContribute = employedSinceYears - employmentYearsRequired;
+            double totalYearsToContribute = employedSinceYears - employmentYearsRequired - employedAndPlanStartDifference;
+            double remainingMonths = (double) planSinceMonths - (totalYearsToContribute * 12);
 
             // Check if employee has completed the required years for match
             if (totalYearsToContribute >= 0) {

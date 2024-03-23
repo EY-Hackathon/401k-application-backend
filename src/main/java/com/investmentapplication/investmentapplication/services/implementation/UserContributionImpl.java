@@ -133,7 +133,9 @@ public class UserContributionImpl implements UserContributionServices {
                     userContributionsEntity.setOriginalContributionPercentage(updatedUserContribution.getUserCurrentContributionPercentage());
                     userContributionsEntity.setPlanStartDate(currentDate);
                     userContributionsEntity.setActualPlanStartDate(actualPlanStartDate);
-                    userContributionsEntity.setPerPayCheck((updatedUserContribution.getUserCurrentContributionPercentage() * salary) / 100);
+                    int count = PayFrequencyYearlyCount.getCountForPayFrequency(userEmploymentDetails.getPayFrequency());
+                    double newContributionValue = salary * (updatedUserContribution.getUserCurrentContributionPercentage() / 100.0);
+                    userContributionsEntity.setPerPayCheck(newContributionValue / count);
                     userContributionsEntity.setPayFrequency(userEmploymentDetails.getPayFrequency());
                     userContributionsEntity.setCurrentContributionPercentage(updatedUserContribution.getUserCurrentContributionPercentage());
                     userContributionsEntity.setRecurringPercentage(updatedUserContribution.getRecurringPercentage());
