@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public interface PlanContributionsOperations {
 
-    @GetMapping("/plancontributions")
+    @GetMapping("/planContributions")
     ResponseEntity<Object> getPlanContribution(@RequestParam String email);
 
-    @PostMapping("/plancontributions")
+    @PostMapping("/planContributions")
     ResponseEntity<Object> updatePlanContribution(@RequestParam String email, @RequestBody PlanContributionsEntity planContribution);
 }
