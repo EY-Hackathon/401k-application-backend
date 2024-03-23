@@ -75,6 +75,15 @@ public class UserContributionImpl implements UserContributionServices {
         UserEmploymentEntity userEmploymentDetails = userEmploymentRepository.findByEmail(email);
         Double salary = userEmploymentDetails.getAnnualSalary();
 
+        Date currentDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+
+        // Add one month to the Calendar
+        calendar.add(Calendar.MONTH, 1);
+
+        final Date[] actualPlanStartDate = {calendar.getTime()};
+
         if (!userEmail.isEmpty() && userEmail.equals(email)) {
             existingUserDetails.forEach(contribution -> {
                 userContributions.stream()
@@ -85,6 +94,11 @@ public class UserContributionImpl implements UserContributionServices {
                                 Double totalContributionValue = contribution.getTotalContributionValue();
                                 if (totalContributionValue == null) {
                                     totalContributionValue = 0.0; // Initialize to zero if null
+                                }
+                                //This is only for testing in docker, will not be used in real scenarios
+                                if(update.getActualPlanStartDate() != null) {
+                                    actualPlanStartDate[0] = update.getActualPlanStartDate();
+                                    contribution.setActualPlanStartDate(actualPlanStartDate[0]);
                                 }
                                 Map<String, Object> TotalContribution = calculateTotalContributionValue(
                                         contribution.getRecurringPercentage(),
@@ -118,21 +132,17 @@ public class UserContributionImpl implements UserContributionServices {
             List<UserAccountsEntity> userAccountDetails = userAccountsRepository.findByEmail(email);
             List<String> userAccountsEmailList = userAccountDetails.stream().map(UserAccountsEntity::getEmail).toList();
             String accountEmail = userAccountsEmailList.get(0) != null ? userAccountsEmailList.get(0) : EMPTY;
-            Date currentDate = new Date();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(currentDate);
 
-            // Add one month to the Calendar
-            calendar.add(Calendar.MONTH, 1);
-
-            Date actualPlanStartDate = calendar.getTime();
 
             if (!accountEmail.isEmpty() && accountEmail.equals(email)) {
                 userContributions.forEach(updatedUserContribution -> {
+                    if(updatedUserContribution.getActualPlanStartDate() != null) {
+                        actualPlanStartDate[0] = updatedUserContribution.getActualPlanStartDate();
+                    }
                     userContributionsEntity.setEmail(updatedUserContribution.getEmail());
                     userContributionsEntity.setOriginalContributionPercentage(updatedUserContribution.getUserCurrentContributionPercentage());
                     userContributionsEntity.setPlanStartDate(currentDate);
-                    userContributionsEntity.setActualPlanStartDate(actualPlanStartDate);
+                    userContributionsEntity.setActualPlanStartDate(actualPlanStartDate[0]);
                     int count = PayFrequencyYearlyCount.getCountForPayFrequency(userEmploymentDetails.getPayFrequency());
                     double newContributionValue = salary * (updatedUserContribution.getUserCurrentContributionPercentage() / 100.0);
                     userContributionsEntity.setPerPayCheck(newContributionValue / count);
