@@ -21,7 +21,7 @@ Provides details about user contribution towards their investments.
 API to provide details about the percentage values of employer contributions.
 
 ### PlanContribution_API 
-The Plan Contributions API provides users functionality to manage employee contributions to their 401k retirement plans within applications or systems. This API allows users to create contribution records.
+The Plan Contributions API provides users functionality to manage employee contributions to their 401k retirement plans. This API allows users to create contribution records.
 
 
 
