@@ -54,4 +54,10 @@ public class DashboardAPIController implements DashboardAPIOperations {
         List<EmployerMatchEntity> response = employerMatchServices.GetEmployerMatchDetails(email);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<Object> updateEmployer(List<EmployerMatchEntity> employerMatchDetails) {
+        String response = String.valueOf(employerMatchServices.UpdateEmployerMatchDetails(employerMatchDetails));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

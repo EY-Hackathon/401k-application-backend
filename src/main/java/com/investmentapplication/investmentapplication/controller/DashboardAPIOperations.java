@@ -1,9 +1,11 @@
 package com.investmentapplication.investmentapplication.controller;
 
+import com.investmentapplication.investmentapplication.entity.EmployerMatchEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @RequestMapping("/api")
 
 public interface DashboardAPIOperations {
@@ -25,4 +27,7 @@ public interface DashboardAPIOperations {
 
     @GetMapping("/employerMatchDetails")
     ResponseEntity<Object> getEmployerMatchDetails(@RequestParam String email);
+
+    @PostMapping("/employerMatchDetails")
+    ResponseEntity<Object> updateEmployer(@RequestBody List<EmployerMatchEntity> employerMatchDetails);
 }

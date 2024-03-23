@@ -10,11 +10,14 @@ import com.investmentapplication.investmentapplication.services.EmployerMatchSer
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployerMatchImpl implements EmployerMatchServices {
@@ -115,5 +118,36 @@ public class EmployerMatchImpl implements EmployerMatchServices {
         EmploymentDetailsEntity employeeDetails = employmentDetailsRepository.findByEmail(email);
 
         return employerMatchRepository.findByEmployerName(employeeDetails.getEmployerName());
+    }
+
+    @Override
+    public AtomicReference<String> UpdateEmployerMatchDetails(List<EmployerMatchEntity> employerMatchDetails){
+        AtomicReference<String> response = new AtomicReference<>("");
+        List<String> distinctEmployerNames = employerMatchDetails.stream()
+                .map(EmployerMatchEntity::getEmployerName)
+                .distinct()
+                .collect(Collectors.toList());
+        distinctEmployerNames.forEach(employerName -> {
+            List<EmployerMatchEntity> existingEmployerDetails = employerMatchRepository.findByEmployerName(employerName);
+            if(existingEmployerDetails.isEmpty()){
+                employerMatchDetails.forEach(employerDetails -> {
+                    EmployerMatchEntity employerMatch = new EmployerMatchEntity();
+                    employerMatch.setEmployerName(employerDetails.getEmployerName());
+                    employerMatch.setEmployerMatchMaxContribution(employerDetails.getEmployerMatchMaxContribution());
+                    employerMatch.setEmployerMatchPercentage(employerDetails.getEmployerMatchPercentage());
+                    employerMatch.setEmploymentYears(employerDetails.getEmploymentYears());
+                    employerMatch.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+                    employerMatch.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+
+                    employerMatchRepository.save(employerMatch);
+
+                    response.set("Added employer match details successfully");
+                });
+            }
+            else{
+                response.set("Employer details already exist");
+            }
+        });
+        return response;
     }
 }
