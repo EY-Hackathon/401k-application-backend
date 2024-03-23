@@ -12,20 +12,17 @@ The JWT token gets generated when user logins as a form of authentication.
 ## User Profile API 
 User can update or view their profile details such as name, dob, mailing address etc.
 ## Dashboard API
-This API shows the 
-
-### Total Balance
-This api 
+This API  helps to retrieve  YTD balance, total balance and total earnings.
 
 ### Total User Contribution
-
-### YTD Balance
-
-### Total Earnings
+Provides details about user contribution towards their investments.
 
 ### Employer Match Value
+API to provide details about the percentage values of employer contributions.
 
-### Employer Details
+### PlanContribution_API 
+The Plan Contributions API provides users functionality to manage employee contributions to their 401k retirement plans within applications or systems. This API allows users to create contribution records.
+
 
 
 
