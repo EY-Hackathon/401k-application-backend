@@ -25,11 +25,10 @@ public class UserServiceImpl implements UserService {
         TokenResponse response = new TokenResponse();
         try {
             List<UserAccountsEntity> storedUser = userRepository.findByEmail(request.getEmail()); //find user by email
-            storedUser.forEach(user -> {
-                if (user == null) {
+                if (storedUser.isEmpty()) {
                     throw new UserNotFoundException("User email does not exist");
                 }
-
+                storedUser.forEach(user -> {
                 if (!request.getPassword().equals(user.getPassword())) {
                     throw new InvalidCredentialsException("Incorrect password");
                 }
@@ -38,12 +37,12 @@ public class UserServiceImpl implements UserService {
                 response.setToken(token);
             });
         } catch (UserNotFoundException e) {
-            response.setErrorCode(ErrorCode.USER_NOT_FOUND);//throw user not found error
+            response.setErrorCode(ErrorCode.USER_NOT_FOUND); //throw user not found error
             response.setMessage(e.getMessage());
-        } catch (InvalidCredentialsException e) { //throw invalid credentials if credentials dont match
+        } catch (InvalidCredentialsException e) { //throw invalid credentials if credentials don't match
             response.setErrorCode(ErrorCode.INVALID_CREDENTIALS);
             response.setMessage(e.getMessage());
-        } catch (Exception e) {
+        } catch (Exception e) { //throw authentication failed error if the user or password doesn't match
             response.setErrorCode(ErrorCode.AUTHENTICATION_ERROR);
             response.setMessage("Authentication failed");
         }

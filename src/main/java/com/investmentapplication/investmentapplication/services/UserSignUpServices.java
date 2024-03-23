@@ -1,12 +1,11 @@
 package com.investmentapplication.investmentapplication.services;
 
 import com.investmentapplication.investmentapplication.dto.UserSignUpDTO;
-
+import com.investmentapplication.investmentapplication.entity.TokenResponse;
 
 
 public interface UserSignUpServices {
 
-    void addUser(UserSignUpDTO userSignUpDTO) throws Exception;
+    TokenResponse addUser(UserSignUpDTO userSignUpDTO);
 
-    boolean isEmailExists(String email) throws Exception;
 }

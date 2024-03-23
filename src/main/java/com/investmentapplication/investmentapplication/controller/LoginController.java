@@ -17,7 +17,7 @@ public class LoginController implements LoginOperations {
 
 
     public ResponseEntity<Object> login(UserAccountsEntity request) throws UsernameNotFoundException {
-        TokenResponse response = userService.loginService(request);
-        return new ResponseEntity<Object>(response, HttpStatus.OK);
+        TokenResponse response = userService.loginService(request); // Delegates the login operation to the userService to generate a token response
+        return new ResponseEntity<Object>(response, HttpStatus.OK); // Return response with OK status
     }
 }
